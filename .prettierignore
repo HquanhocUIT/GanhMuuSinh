@@ -1,0 +1,9 @@
+node_modules
+fe/dist
+test-results
+playwright-report
+package-lock.json
+*.tsbuildinfo
+.venv-vision
+.reference
+be/eval/dataset-manifest.json

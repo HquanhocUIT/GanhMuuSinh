@@ -1,0 +1,20 @@
+{
+  "name": "@ganhmuusinh/be",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "tts:compare": "node scripts/generate-tts-comparison.js",
+    "test": "node --test test/*.test.js",
+    "vision:eval": "node scripts/evaluate-vision.js",
+    "vision:download": "node scripts/download-vision-samples.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "sharp": "^0.35.5",
+    "zod": "^4.1.12"
+  }
+}

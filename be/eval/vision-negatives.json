@@ -1,0 +1,49 @@
+[
+  {
+    "id": "negative-cola",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/8/81/Coca-Cola_Glas_mit_Eis.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Coca-Cola_Glas_mit_Eis.jpg",
+    "expectedVendorId": null,
+    "selectedVendorId": "ca-phe"
+  },
+  {
+    "id": "negative-iced-tea",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Iced_Tea.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Iced_Tea.jpg",
+    "expectedVendorId": null,
+    "selectedVendorId": "ca-phe"
+  },
+  {
+    "id": "negative-lemonade",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Limonade_1400.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Limonade_1400.jpg",
+    "expectedVendorId": null,
+    "selectedVendorId": "nuoc-mia"
+  },
+  {
+    "id": "negative-banh-xeo",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/e/e2/Crispy_Vietnamese_crepes%2C_banh_xeo_with_vegetables.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Crispy_Vietnamese_crepes,_banh_xeo_with_vegetables.jpg",
+    "expectedVendorId": null,
+    "selectedVendorId": "banh-khot"
+  },
+  {
+    "id": "negative-flan",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/4/49/Flan_casero.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Flan_casero.jpg",
+    "expectedVendorId": null,
+    "selectedVendorId": "dau-hu"
+  },
+  {
+    "id": "negative-river",
+    "path": "fe/public/images/river.jpg",
+    "expectedVendorId": null,
+    "selectedVendorId": "bot-chien"
+  },
+  {
+    "id": "negative-vendor-cart",
+    "path": "fe/public/images/banhmi.jpg",
+    "expectedVendorId": null,
+    "selectedVendorId": "banh-mi"
+  }
+]

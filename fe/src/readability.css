@@ -1,0 +1,693 @@
+/* Shared reading sizes and comfortable controls for an app used on the street. */
+.button {
+  font-size: 13px;
+  min-height: 46px;
+}
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+}
+.small-note {
+  font-size: 12px;
+}
+.skip-link:not(:focus) {
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  padding: 0;
+}
+.desktop-nav a {
+  font-size: 13px;
+}
+.language-button {
+  font-size: 13px;
+}
+.saved-button {
+  height: 44px;
+  font-size: 13px;
+}
+.hero .eyebrow {
+  font-size: 10px;
+}
+.hero-copy > p {
+  font-size: 14px;
+  max-width: 440px;
+}
+.hero-footnote p,
+.hero-footnote small {
+  font-size: 10px;
+}
+.photo-location {
+  font-size: 10px;
+}
+.photo-caption > span {
+  font-size: 9px;
+}
+.story-peek > span > small {
+  font-size: 8px;
+}
+.story-peek > span > span {
+  font-size: 10px;
+}
+.values-strip > span {
+  font-size: 12px;
+}
+.section-heading .eyebrow {
+  font-size: 10px;
+}
+.section-heading p {
+  font-size: 13px;
+}
+.view-all {
+  font-size: 12px;
+}
+.planner-field small {
+  font-size: 9px;
+  letter-spacing: 0.7px;
+}
+.planner-field select {
+  font-size: 13px;
+  min-height: 34px;
+}
+.planner-submit {
+  font-size: 12px;
+}
+.planner-bottom > span {
+  font-size: 10px;
+}
+.filter-button {
+  font-size: 12px;
+  min-height: 44px;
+}
+.check-chip {
+  min-height: 44px;
+  font-size: 12px;
+}
+.allergen-filters legend {
+  font-size: 12px;
+}
+.region-tabs button {
+  font-size: 12px;
+  min-height: 44px;
+}
+.inline-search input {
+  font-size: 12px;
+  min-height: 44px;
+}
+.quest-place {
+  font-size: 10px;
+  line-height: 1.8;
+}
+.quest-card h3 {
+  font-size: 22px;
+  min-height: 66px;
+}
+.quest-content > p {
+  font-size: 12px;
+  min-height: 45px;
+}
+.quest-meta {
+  font-size: 10px;
+  gap: 12px;
+}
+.quest-bottom strong {
+  font-size: 18px;
+}
+.quest-bottom > div > span {
+  font-size: 10px;
+}
+.card-arrow,
+.save-quest {
+  width: 44px;
+  height: 44px;
+}
+.quest-ribbon {
+  font-size: 9px;
+}
+.collection-note {
+  font-size: 11px;
+}
+.image-credit {
+  font-size: 9px;
+}
+.tools-banner-copy .eyebrow {
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+.tools-banner-copy p,
+.tool-feature p {
+  font-size: 12px;
+}
+.feature-link {
+  font-size: 12px;
+}
+.closing-note > span:last-child {
+  font-size: 9px;
+}
+.footer-inner > p {
+  font-size: 12px;
+}
+.footer-inner .demo-label {
+  font-size: 11px;
+}
+.footer-links > a {
+  font-size: 11px;
+}
+.modal-header h2 {
+  font-size: 15px;
+}
+.modal-header .icon-button {
+  width: 44px;
+  height: 44px;
+}
+.preview-stops strong {
+  font-size: 14px;
+}
+.preview-stops small {
+  font-size: 12px;
+}
+.preview-stops li > span:last-child {
+  font-size: 13px;
+}
+.itinerary-content h3 {
+  font-size: 16px;
+}
+.itinerary-content > p {
+  font-size: 13px;
+}
+.itinerary-content > small {
+  font-size: 11px;
+}
+.itinerary-content > strong {
+  font-size: 14px;
+}
+.itinerary-topline {
+  font-size: 11px;
+}
+.itinerary-actions > button {
+  font-size: 11px;
+  min-height: 44px;
+}
+.journey-summary > span {
+  font-size: 13px;
+}
+.journey-progress > span,
+.map-sidebar-heading > span {
+  font-size: 11px;
+}
+.map-caption {
+  font-size: 11px;
+}
+.status-tag {
+  font-size: 10px;
+}
+.tool-vendor-select > label {
+  font-size: 11px;
+}
+.field-label {
+  font-size: 14px;
+}
+.order-options > button {
+  font-size: 12px;
+}
+.order-options > button small {
+  font-size: 11px;
+}
+.stepper .icon-button {
+  width: 44px;
+  height: 44px;
+}
+.order-sentence > small {
+  font-size: 13px;
+}
+.order-sentence > span {
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+.response-panel > .centered {
+  font-size: 14px;
+}
+.response-panel > .small-note {
+  font-size: 12px;
+}
+.sample-phrase {
+  font-size: 12px;
+  min-height: 44px;
+}
+.translation-result small {
+  font-size: 11px;
+}
+.consent-label,
+.scan-dropzone p {
+  font-size: 13px;
+}
+.demo-scan-box > span {
+  font-size: 10px;
+}
+.demo-scan-box > p,
+.demo-scan-box > .button {
+  font-size: 13px;
+}
+.xray-empty li p,
+.food-facts > p {
+  font-size: 13px;
+}
+.food-facts > .small-note {
+  font-size: 12px;
+}
+.ingredient-chip {
+  font-size: 12px;
+}
+.food-facts h3 {
+  font-size: 15px;
+}
+.scan-success > p {
+  font-size: 14px;
+}
+.badge-card h3 {
+  font-size: 14px;
+}
+.badge-card > p {
+  font-size: 12px;
+}
+.badge-status {
+  font-size: 10px;
+}
+.passport-stats small {
+  font-size: 11px;
+}
+.passport-intro > p {
+  font-size: 14px;
+}
+.story-card-top > span {
+  font-size: 13px;
+}
+.story-card-top small {
+  font-size: 9px;
+}
+.story-card > p {
+  font-size: 14px;
+}
+.story-card > .button {
+  font-size: 13px;
+}
+.notice {
+  font-size: 13px;
+}
+.food-pin span {
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+}
+.food-pin b {
+  display: block;
+  transform: rotate(45deg);
+}
+.map-popup-button {
+  min-height: 44px;
+  font-size: 12px;
+}
+.map-tabs {
+  justify-content: flex-start;
+}
+.modal-backdrop {
+  inset: 0 auto auto 0;
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+}
+.modal {
+  min-width: 0;
+  width: min(580px, calc(100vw - 40px));
+  max-width: calc(100vw - 40px);
+  overscroll-behavior: contain;
+}
+.modal-wide {
+  width: min(680px, calc(100vw - 40px));
+}
+.modal-body,
+.modal-header,
+.preview-stops li > div {
+  min-width: 0;
+}
+.preview-stops small {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 1150px) {
+  .desktop-nav a {
+    font-size: 12px;
+  }
+  .hero .eyebrow {
+    font-size: 8px;
+  }
+  .hero-cta .button {
+    font-size: 12px;
+  }
+  .hero-copy > p {
+    font-size: 13px;
+  }
+  .planner-field select {
+    font-size: 11px;
+  }
+  .planner-field small {
+    font-size: 8px;
+  }
+  .planner-submit {
+    font-size: 11px;
+  }
+  .quest-card h3 {
+    font-size: 20px;
+  }
+  .quest-meta {
+    font-size: 9px;
+    gap: 8px;
+  }
+  .quest-place {
+    font-size: 9px;
+  }
+  .tools-banner-copy .eyebrow {
+    font-size: 8px;
+  }
+  .footer-inner > p {
+    font-size: 10px;
+  }
+  .footer-inner .demo-label {
+    font-size: 9px;
+  }
+}
+@media (max-width: 960px) {
+  .values-strip > span {
+    font-size: 10px;
+  }
+  .hero .eyebrow {
+    font-size: 7px;
+  }
+  .hero-copy > p {
+    font-size: 12px;
+  }
+  .story-peek > span > small {
+    font-size: 7px;
+  }
+  .planner-field select {
+    font-size: 12px;
+  }
+  .quest-card h3 {
+    font-size: 22px;
+    min-height: 0;
+  }
+  .quest-content > p {
+    min-height: 0;
+  }
+  .quest-meta {
+    font-size: 11px;
+    gap: 14px;
+  }
+  .quest-place {
+    font-size: 10px;
+  }
+  .footer-inner > p {
+    font-size: 12px;
+  }
+  .footer-inner .demo-label {
+    font-size: 11px;
+  }
+  .order-options > button {
+    font-size: 12px;
+  }
+  .tool-vendor-select select {
+    font-size: 14px;
+  }
+  .passport-stats small {
+    font-size: 10px;
+  }
+}
+@media (max-width: 700px) {
+  .modal {
+    width: min(580px, calc(100vw - 24px));
+    max-width: calc(100vw - 24px);
+  }
+  .modal-wide {
+    width: min(680px, calc(100vw - 24px));
+  }
+  .button {
+    font-size: 14px;
+  }
+  .language-button,
+  .saved-button,
+  .menu-toggle {
+    width: 40px;
+    min-width: 40px;
+    height: 44px;
+  }
+  .language-button {
+    font-size: 12px;
+  }
+  .mobile-nav a {
+    font-size: 13px;
+  }
+  .hero .eyebrow {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+  .hero-copy > p {
+    font-size: 16px;
+    line-height: 1.85;
+  }
+  .hero-cta {
+    gap: 17px;
+  }
+  .hero-cta .button {
+    font-size: 12px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .hero-cta .text-button {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .hero-footnote p,
+  .hero-footnote small {
+    font-size: 10px;
+  }
+  .photo-location {
+    font-size: 8px;
+  }
+  .story-peek > span > small {
+    font-size: 7px;
+  }
+  .story-peek > span > span {
+    font-size: 10px;
+  }
+  .values-strip > span {
+    font-size: 12px;
+  }
+  .section-heading .eyebrow {
+    font-size: 9px;
+  }
+  .section-heading p {
+    font-size: 14px;
+  }
+  .view-all {
+    font-size: 12px;
+  }
+  .planner-field select {
+    font-size: 16px;
+    min-height: 38px;
+  }
+  .planner-field small {
+    font-size: 9px;
+  }
+  .planner-field {
+    min-height: 78px;
+  }
+  .planner-submit {
+    font-size: 14px;
+  }
+  .planner-bottom > span {
+    font-size: 11px;
+  }
+  .region-tabs button {
+    font-size: 11px;
+    min-height: 44px;
+    padding: 8px 10px;
+  }
+  .inline-search input {
+    font-size: 16px;
+  }
+  .quest-card h3 {
+    font-size: 24px;
+  }
+  .quest-content > p {
+    font-size: 14px;
+  }
+  .quest-place {
+    font-size: 10px;
+  }
+  .quest-meta {
+    font-size: 11px;
+    gap: 15px;
+  }
+  .quest-bottom > div > span {
+    font-size: 10px;
+  }
+  .collection-note {
+    font-size: 11px;
+  }
+  .tools-banner-copy .eyebrow {
+    font-size: 8px;
+    letter-spacing: 0.8px;
+  }
+  .tools-banner-copy p,
+  .tool-feature p {
+    font-size: 14px;
+  }
+  .feature-link {
+    font-size: 13px;
+  }
+  .footer-inner .demo-label {
+    font-size: 9px;
+  }
+  .footer-inner > p {
+    font-size: 12px;
+  }
+  .page-heading p {
+    font-size: 15px;
+  }
+  .page-heading .eyebrow {
+    font-size: 10px;
+  }
+  .surface-card > .eyebrow {
+    font-size: 9px;
+  }
+  .tool-vendor-select select {
+    font-size: 16px;
+    max-width: 100%;
+  }
+  .tool-vendor-select .demo-label {
+    font-size: 10px;
+  }
+  .order-options > button {
+    font-size: 12px;
+  }
+  .order-options > button small {
+    font-size: 11px;
+  }
+  .response-panel > .centered {
+    font-size: 15px;
+  }
+  .response-panel > .small-note {
+    font-size: 12px;
+  }
+  .consent-label {
+    font-size: 13px;
+  }
+  .scan-dropzone h3 {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  .scan-dropzone p {
+    font-size: 13px;
+  }
+  .upload-buttons > .button {
+    font-size: 12px;
+  }
+  .xray-empty li p {
+    font-size: 14px;
+  }
+  .food-facts > p {
+    font-size: 14px;
+  }
+  .scan-result-actions > .button {
+    font-size: 13px;
+  }
+  .itinerary-actions > button {
+    font-size: 12px;
+  }
+  .itinerary-content > p {
+    font-size: 14px;
+  }
+  .itinerary-content > small {
+    font-size: 12px;
+  }
+  .map-caption {
+    font-size: 10px;
+  }
+  .journey-summary > span {
+    font-size: 12px;
+  }
+  .preview-stops strong {
+    font-size: 12px;
+  }
+  .preview-stops small {
+    font-size: 11px;
+  }
+  .preview-stops li > span:last-child {
+    font-size: 11px;
+  }
+  .modal-header h2 {
+    font-size: 13px;
+  }
+  .modal-body > .eyebrow {
+    font-size: 10px;
+  }
+  .passport-intro > p {
+    font-size: 15px;
+  }
+  .passport-stats small {
+    font-size: 10px;
+  }
+  .badge-card h3 {
+    font-size: 13px;
+  }
+  .badge-card > p {
+    font-size: 11px;
+  }
+  .badge-status {
+    font-size: 9px;
+  }
+  .story-card > p {
+    font-size: 16px;
+  }
+  .notice {
+    font-size: 13px;
+  }
+}
+@media (max-width: 374px) {
+  .hero .eyebrow {
+    font-size: 8px;
+  }
+  .hero-cta {
+    gap: 12px;
+  }
+  .hero-cta .button {
+    font-size: 11px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .hero-cta .text-button {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .hero-footnote p,
+  .hero-footnote small {
+    font-size: 9px;
+  }
+  .region-tabs button {
+    font-size: 10px;
+    padding: 8px;
+  }
+  .quest-meta {
+    font-size: 10px;
+    gap: 12px;
+  }
+  .footer-inner .demo-label {
+    font-size: 8px;
+  }
+  .planner-field select {
+    font-size: 15px;
+  }
+  .order-options > button {
+    font-size: 13px;
+  }
+}

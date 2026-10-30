@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "diagram_type": "tree",
+  "meta": {
+    "title": "Cấu trúc dự án Chạm Vị",
+    "output": ".archify/tree-cham-vi-20261030-133938/cham-vi-folder-architecture.html",
+    "quality_profile": "showcase"
+  },
+  "layout": {
+    "direction": "right",
+    "gapX": 42,
+    "gapY": 26,
+    "nodeW": 150,
+    "nodeMaxW": 250
+  },
+  "nodes": [
+    {
+      "id": "project",
+      "label": "Chạm Vị",
+      "sublabel": "Monorepo · npm workspaces"
+    },
+    {
+      "id": "rootfiles",
+      "label": "Cấu hình gốc",
+      "parent": "project",
+      "sublabel": "Scripts chạy FE, BE và Ollama"
+    },
+    {
+      "id": "frontend",
+      "label": "fe/",
+      "parent": "project",
+      "sublabel": "React 19 · TypeScript · Vite"
+    },
+    {
+      "id": "fe_src",
+      "label": "src/",
+      "parent": "frontend",
+      "sublabel": "Ứng dụng và giao diện"
+    },
+    {
+      "id": "fe_pages",
+      "label": "pages/",
+      "parent": "fe_src",
+      "sublabel": "Khám phá · hành trình · công cụ"
+    },
+    {
+      "id": "fe_components",
+      "label": "components/",
+      "parent": "fe_src",
+      "sublabel": "Bản đồ và thành phần dùng chung"
+    },
+    {
+      "id": "fe_admin",
+      "label": "admin/",
+      "parent": "fe_src",
+      "sublabel": "Giao diện quản trị"
+    },
+    {
+      "id": "fe_lib",
+      "label": "lib/",
+      "parent": "fe_src",
+      "sublabel": "API client · speech · lưu trữ"
+    },
+    {
+      "id": "fe_public",
+      "label": "public/",
+      "parent": "frontend",
+      "sublabel": "Ảnh và audio tĩnh"
+    },
+    {
+      "id": "backend",
+      "label": "be/",
+      "parent": "project",
+      "sublabel": "Node.js · Express · SQLite"
+    },
+    {
+      "id": "be_src",
+      "label": "src/",
+      "parent": "backend",
+      "sublabel": "API · nghiệp vụ · schema DB"
+    },
+    {
+      "id": "be_routes",
+      "label": "routes/",
+      "parent": "be_src",
+      "sublabel": "API quản trị và đóng góp"
+    },
+    {
+      "id": "be_services",
+      "label": "services/",
+      "parent": "be_src",
+      "sublabel": "Auth · planner · AI · nội dung"
+    },
+    {
+      "id": "be_data",
+      "label": "data/",
+      "parent": "be_src",
+      "sublabel": "Catalog seed · reference pins · wards"
+    },
+    {
+      "id": "be_vision",
+      "label": "vision/",
+      "parent": "backend",
+      "sublabel": "Python · SigLIP2 · truy hồi ảnh"
+    },
+    {
+      "id": "be_scripts",
+      "label": "scripts/",
+      "parent": "backend",
+      "sublabel": "Khởi chạy Ollama · đánh giá vision"
+    },
+    {
+      "id": "be_data_dir",
+      "label": "data/",
+      "parent": "backend",
+      "sublabel": "SQLite cục bộ của ứng dụng"
+    },
+    {
+      "id": "be_test",
+      "label": "test/ · eval/",
+      "parent": "backend",
+      "sublabel": "API tests · nhãn và bộ đánh giá ảnh"
+    },
+    {
+      "id": "dataset",
+      "label": "dataset/",
+      "parent": "project",
+      "sublabel": "107 ảnh · 12 nhóm món"
+    },
+    {
+      "id": "project_docs",
+      "label": "docs/",
+      "parent": "project",
+      "sublabel": "Tài liệu kỹ thuật và báo cáo"
+    },
+    {
+      "id": "vision_docs",
+      "label": "vision/",
+      "parent": "project_docs",
+      "sublabel": "Đánh giá dataset · kết quả · setup"
+    },
+    {
+      "id": "screenshots",
+      "label": "screenshots/",
+      "parent": "project_docs",
+      "sublabel": "Ảnh giao diện desktop và mobile"
+    },
+    {
+      "id": "e2e",
+      "label": "e2e/",
+      "parent": "project",
+      "sublabel": "Playwright browser tests"
+    },
+    {
+      "id": "design_system",
+      "label": "design-system/",
+      "parent": "project",
+      "sublabel": "UI/UX design tokens và nguyên tắc"
+    },
+    {
+      "id": "scripts",
+      "label": "script/",
+      "parent": "project",
+      "sublabel": "Kịch bản món ăn · công cụ audio"
+    },
+    {
+      "id": "audio_lab",
+      "label": "local-audio-test/",
+      "parent": "project",
+      "sublabel": "Trang nghe thử và so sánh voice"
+    }
+  ]
+}

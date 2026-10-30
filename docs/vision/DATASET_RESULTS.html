@@ -1,0 +1,2437 @@
+<!doctype html>
+<html lang="vi">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>Chạm Vị — kiểm tra 107 ảnh</title>
+  <style>
+    body {
+      margin: 0;
+      background: #f6f5ee;
+      color: #173d34;
+      font: 16px/1.5 system-ui;
+    }
+    main {
+      max-width: 1400px;
+      margin: auto;
+      padding: 28px;
+    }
+    h1 {
+      font-size: 30px;
+      margin-bottom: 6px;
+    }
+    h2 {
+      font-size: 18px;
+      margin: 0;
+    }
+    header p {
+      max-width: 1000px;
+    }
+    label {
+      display: grid;
+      gap: 5px;
+      font-size: 14px;
+    }
+    .filters {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin: 24px 0;
+    }
+    select,
+    input {
+      font: inherit;
+      padding: 10px;
+      border: 1px solid #becbc3;
+      border-radius: 7px;
+      background: white;
+    }
+    #grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 18px;
+    }
+    article {
+      background: white;
+      border: 1px solid #d8dfd8;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    article img {
+      height: 210px;
+      width: 100%;
+      object-fit: contain;
+      background: #eceee5;
+    }
+    article[hidden] {
+      display: none;
+    }
+    .body {
+      padding: 16px;
+    }
+    .body code {
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+    .meta,
+    .note {
+      font-size: 13px;
+      color: #54675f;
+    }
+    .correct {
+      color: #17633d;
+    }
+    .wrong,
+    .error {
+      color: #ab2929;
+    }
+    .abstained {
+      color: #885214;
+    }
+    p {
+      margin: 8px 0;
+    }
+    a {
+      color: inherit;
+    }
+    input {
+      min-width: 240px;
+    }
+  </style>
+  <main>
+    <header>
+      <h1>Chạm Vị · Đánh giá 107 ảnh</h1>
+      <p>
+        Trước: 57 đúng, 8 sai nhãn, 39 từ chối, 3 lỗi/ảnh nhỏ. Sau: đã chạy 107/107 ảnh — 98 đúng, 0
+        sai nhãn, 6 từ chối, 3 lỗi/ảnh nhỏ. Ảnh truy vấn được loại khỏi bộ ảnh mẫu; 21 ảnh test
+        không nằm trong index. Similarity/confidence không phải accuracy đã hiệu chuẩn.
+      </p>
+      <p>
+        <a href="DATASET_RESULTS.md">Báo cáo và giới hạn</a> ·
+        <a href="DATASET_RESULTS.csv">CSV đầy đủ</a>
+      </p>
+    </header>
+    <div class="filters">
+      <label
+        >Nhóm món<select id="family">
+          <option value="">Tất cả</option>
+          <option>Bánh bèo</option>
+          <option>Bánh bông lan</option>
+          <option>Bánh khọt</option>
+          <option>Bánh mì</option>
+          <option>Bột chiên</option>
+          <option>Cà phê</option>
+          <option>Chè đậu xanh</option>
+          <option>Tàu hũ</option>
+          <option>Gỏi khô bò</option>
+          <option>Gỏi măng cụt</option>
+          <option>Nước mía</option>
+          <option>Phá lấu</option>
+        </select></label
+      ><label
+        >Kết quả sau<select id="state">
+          <option value="">Tất cả</option>
+          <option value="correct">Đúng</option>
+          <option value="wrong">Sai nhãn</option>
+          <option value="abstained">Chưa chắc</option>
+          <option value="error">Lỗi/ảnh nhỏ</option>
+        </select></label
+      ><label>Tìm tên ảnh<input id="search" placeholder="Ví dụ: goi_kho_bo/1.jpg" /></label>
+    </div>
+    <p id="count" aria-live="polite"></p>
+    <section id="grid">
+      <article data-family="Bánh bèo" data-state="correct" data-search="dataset/banh_beo/1.jpg">
+        <a href="../../dataset/banh_beo/1.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_beo/1.jpg"
+            alt="Bánh bèo — dataset/banh_beo/1.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh bèo</h2>
+          <code>dataset/banh_beo/1.jpg</code>
+          <p class="meta">600x400 · reference · 11.62s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh bèo · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh bèo. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bột chiên" data-state="correct" data-search="dataset/banh_beo/10.jpg">
+        <a href="../../dataset/banh_beo/10.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_beo/10.jpg"
+            alt="Bột chiên — dataset/banh_beo/10.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bột chiên</h2>
+          <code>dataset/banh_beo/10.jpg</code>
+          <p class="meta">565x353 · reference · 8.71s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bột chiên · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bột chiên. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh bèo" data-state="correct" data-search="dataset/banh_beo/2.jpg">
+        <a href="../../dataset/banh_beo/2.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_beo/2.jpg"
+            alt="Bánh bèo — dataset/banh_beo/2.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh bèo</h2>
+          <code>dataset/banh_beo/2.jpg</code>
+          <p class="meta">738x414 · test · 8.26s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh bèo · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh bèo. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh bèo" data-state="correct" data-search="dataset/banh_beo/3.jpg">
+        <a href="../../dataset/banh_beo/3.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_beo/3.jpg"
+            alt="Bánh bèo — dataset/banh_beo/3.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh bèo</h2>
+          <code>dataset/banh_beo/3.jpg</code>
+          <p class="meta">600x400 · development · 8.4s</p>
+          <p>Trước: <b>Sai nhãn</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh bèo · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh bèo. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh bèo" data-state="correct" data-search="dataset/banh_beo/4.jpg">
+        <a href="../../dataset/banh_beo/4.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_beo/4.jpg"
+            alt="Bánh bèo — dataset/banh_beo/4.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh bèo</h2>
+          <code>dataset/banh_beo/4.jpg</code>
+          <p class="meta">540x360 · reference · 8.75s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh bèo · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh bèo. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh bèo" data-state="correct" data-search="dataset/banh_beo/5.jpg">
+        <a href="../../dataset/banh_beo/5.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_beo/5.jpg"
+            alt="Bánh bèo — dataset/banh_beo/5.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh bèo</h2>
+          <code>dataset/banh_beo/5.jpg</code>
+          <p class="meta">447x447 · reference · 8.6s</p>
+          <p>Trước: <b>Sai nhãn</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh bèo · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh bèo. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh bèo" data-state="correct" data-search="dataset/banh_beo/6.jpg">
+        <a href="../../dataset/banh_beo/6.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_beo/6.jpg"
+            alt="Bánh bèo — dataset/banh_beo/6.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh bèo</h2>
+          <code>dataset/banh_beo/6.jpg</code>
+          <p class="meta">515x388 · reference · 8.25s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh bèo · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh bèo. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh bèo" data-state="correct" data-search="dataset/banh_beo/7.jpg">
+        <a href="../../dataset/banh_beo/7.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_beo/7.jpg"
+            alt="Bánh bèo — dataset/banh_beo/7.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh bèo</h2>
+          <code>dataset/banh_beo/7.jpg</code>
+          <p class="meta">500x500 · test · 9.03s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh bèo · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh bèo. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh bèo" data-state="correct" data-search="dataset/banh_beo/8.jpg">
+        <a href="../../dataset/banh_beo/8.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_beo/8.jpg"
+            alt="Bánh bèo — dataset/banh_beo/8.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh bèo</h2>
+          <code>dataset/banh_beo/8.jpg</code>
+          <p class="meta">680x451 · development · 8.44s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh bèo · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh bèo. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh bèo" data-state="correct" data-search="dataset/banh_beo/9.jpg">
+        <a href="../../dataset/banh_beo/9.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_beo/9.jpg"
+            alt="Bánh bèo — dataset/banh_beo/9.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh bèo</h2>
+          <code>dataset/banh_beo/9.jpg</code>
+          <p class="meta">713x429 · reference · 8.3s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh bèo · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh bèo. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Bánh bông lan"
+        data-state="correct"
+        data-search="dataset/banh_bong_lan/1.jpg"
+      >
+        <a href="../../dataset/banh_bong_lan/1.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_bong_lan/1.jpg"
+            alt="Bánh bông lan — dataset/banh_bong_lan/1.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh bông lan</h2>
+          <code>dataset/banh_bong_lan/1.jpg</code>
+          <p class="meta">594x336 · reference · 8.47s</p>
+          <p>Trước: <b>Sai nhãn</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh bông lan · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh bông lan. Thông tin nguyên liệu và biến thể lấy từ danh mục,
+            chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Bánh bông lan"
+        data-state="correct"
+        data-search="dataset/banh_bong_lan/2.jpg"
+      >
+        <a href="../../dataset/banh_bong_lan/2.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_bong_lan/2.jpg"
+            alt="Bánh bông lan — dataset/banh_bong_lan/2.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh bông lan</h2>
+          <code>dataset/banh_bong_lan/2.jpg</code>
+          <p class="meta">738x414 · reference · 7.93s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh bông lan · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh bông lan. Thông tin nguyên liệu và biến thể lấy từ danh mục,
+            chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Bánh bông lan"
+        data-state="correct"
+        data-search="dataset/banh_bong_lan/3.jpg"
+      >
+        <a href="../../dataset/banh_bong_lan/3.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_bong_lan/3.jpg"
+            alt="Bánh bông lan — dataset/banh_bong_lan/3.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh bông lan</h2>
+          <code>dataset/banh_bong_lan/3.jpg</code>
+          <p class="meta">638x480 · development · 14.73s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh bông lan · qwen-review</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh bông lan. Thông tin nguyên liệu và biến thể lấy từ danh mục,
+            chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Bánh bông lan"
+        data-state="correct"
+        data-search="dataset/banh_bong_lan/4.jpg"
+      >
+        <a href="../../dataset/banh_bong_lan/4.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_bong_lan/4.jpg"
+            alt="Bánh bông lan — dataset/banh_bong_lan/4.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh bông lan</h2>
+          <code>dataset/banh_bong_lan/4.jpg</code>
+          <p class="meta">638x480 · reference · 7.68s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh bông lan · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh bông lan. Thông tin nguyên liệu và biến thể lấy từ danh mục,
+            chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Bánh bông lan"
+        data-state="correct"
+        data-search="dataset/banh_bong_lan/5.jpg"
+      >
+        <a href="../../dataset/banh_bong_lan/5.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_bong_lan/5.jpg"
+            alt="Bánh bông lan — dataset/banh_bong_lan/5.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh bông lan</h2>
+          <code>dataset/banh_bong_lan/5.jpg</code>
+          <p class="meta">597x335 · development · 8.41s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh bông lan · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh bông lan. Thông tin nguyên liệu và biến thể lấy từ danh mục,
+            chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Bánh bông lan"
+        data-state="abstained"
+        data-search="dataset/banh_bong_lan/6.jpg"
+      >
+        <a href="../../dataset/banh_bong_lan/6.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_bong_lan/6.jpg"
+            alt="Bánh bông lan — dataset/banh_bong_lan/6.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh bông lan</h2>
+          <code>dataset/banh_bong_lan/6.jpg</code>
+          <p class="meta">399x501 · test · 16.25s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="abstained">Chưa chắc</b></p>
+          <p>Chưa xác định món ·</p>
+          <p class="note">
+            Đặc điểm món và ảnh mẫu chưa thống nhất. Hãy chụp cận món hơn để thấy rõ phần món chính.
+          </p>
+          <p class="note">
+            Phần bánh bị sốt, chà bông và topping che gần hết. Thêm góc ngang hoặc ảnh cắt bánh để
+            nhìn thấy ruột xốp; không suy ra bánh chỉ từ trứng muối.
+          </p>
+        </div>
+      </article>
+      <article
+        data-family="Bánh bông lan"
+        data-state="abstained"
+        data-search="dataset/banh_bong_lan/7.jpg"
+      >
+        <a href="../../dataset/banh_bong_lan/7.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_bong_lan/7.jpg"
+            alt="Bánh bông lan — dataset/banh_bong_lan/7.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh bông lan</h2>
+          <code>dataset/banh_bong_lan/7.jpg</code>
+          <p class="meta">316x632 · reference · 0.31s</p>
+          <p>Trước: <b>Sai nhãn</b> · Sau: <b class="abstained">Chưa chắc</b></p>
+          <p>Chưa xác định món ·</p>
+          <p class="note">
+            Ảnh chưa giống đủ với các nhóm món mẫu, hoặc món quá nhỏ trong khung hình. Hãy chụp cận
+            món hoặc ly đang dùng.
+          </p>
+          <p class="note">
+            Ảnh có dải đen và nhiều chai/hộp ở nền; các bánh nhỏ chưa lộ ruột. Nên dùng ảnh gốc chụp
+            cận một bánh hoặc một miếng bánh đã cắt.
+          </p>
+        </div>
+      </article>
+      <article data-family="Bánh khọt" data-state="correct" data-search="dataset/banh_khot/1.jpg">
+        <a href="../../dataset/banh_khot/1.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_khot/1.jpg"
+            alt="Bánh khọt — dataset/banh_khot/1.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh khọt</h2>
+          <code>dataset/banh_khot/1.jpg</code>
+          <p class="meta">534x374 · development · 9.58s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh khọt · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh khọt. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh khọt" data-state="correct" data-search="dataset/banh_khot/10.jpg">
+        <a href="../../dataset/banh_khot/10.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_khot/10.jpg"
+            alt="Bánh khọt — dataset/banh_khot/10.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh khọt</h2>
+          <code>dataset/banh_khot/10.jpg</code>
+          <p class="meta">554x554 · test · 8.76s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh khọt · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh khọt. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh khọt" data-state="correct" data-search="dataset/banh_khot/2.jpg">
+        <a href="../../dataset/banh_khot/2.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_khot/2.jpg"
+            alt="Bánh khọt — dataset/banh_khot/2.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh khọt</h2>
+          <code>dataset/banh_khot/2.jpg</code>
+          <p class="meta">594x336 · test · 8.86s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh khọt · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh khọt. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh khọt" data-state="correct" data-search="dataset/banh_khot/3.jpg">
+        <a href="../../dataset/banh_khot/3.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_khot/3.jpg"
+            alt="Bánh khọt — dataset/banh_khot/3.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh khọt</h2>
+          <code>dataset/banh_khot/3.jpg</code>
+          <p class="meta">600x400 · reference · 9.56s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh khọt · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh khọt. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh khọt" data-state="correct" data-search="dataset/banh_khot/4.jpg">
+        <a href="../../dataset/banh_khot/4.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_khot/4.jpg"
+            alt="Bánh khọt — dataset/banh_khot/4.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh khọt</h2>
+          <code>dataset/banh_khot/4.jpg</code>
+          <p class="meta">554x554 · reference · 9.51s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh khọt · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh khọt. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh khọt" data-state="correct" data-search="dataset/banh_khot/5.jpg">
+        <a href="../../dataset/banh_khot/5.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_khot/5.jpg"
+            alt="Bánh khọt — dataset/banh_khot/5.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh khọt</h2>
+          <code>dataset/banh_khot/5.jpg</code>
+          <p class="meta">600x400 · reference · 8.9s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh khọt · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh khọt. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh khọt" data-state="correct" data-search="dataset/banh_khot/6.jpg">
+        <a href="../../dataset/banh_khot/6.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_khot/6.jpg"
+            alt="Bánh khọt — dataset/banh_khot/6.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh khọt</h2>
+          <code>dataset/banh_khot/6.jpg</code>
+          <p class="meta">600x400 · development · 9.57s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh khọt · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh khọt. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh khọt" data-state="correct" data-search="dataset/banh_khot/7.jpg">
+        <a href="../../dataset/banh_khot/7.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_khot/7.jpg"
+            alt="Bánh khọt — dataset/banh_khot/7.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh khọt</h2>
+          <code>dataset/banh_khot/7.jpg</code>
+          <p class="meta">547x365 · reference · 9.42s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh khọt · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh khọt. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh khọt" data-state="correct" data-search="dataset/banh_khot/8.jpg">
+        <a href="../../dataset/banh_khot/8.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_khot/8.jpg"
+            alt="Bánh khọt — dataset/banh_khot/8.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh khọt</h2>
+          <code>dataset/banh_khot/8.jpg</code>
+          <p class="meta">515x388 · reference · 9.4s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh khọt · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh khọt. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh khọt" data-state="correct" data-search="dataset/banh_khot/9.jpg">
+        <a href="../../dataset/banh_khot/9.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_khot/9.jpg"
+            alt="Bánh khọt — dataset/banh_khot/9.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh khọt</h2>
+          <code>dataset/banh_khot/9.jpg</code>
+          <p class="meta">554x554 · reference · 9.46s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh khọt · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh khọt. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh mì" data-state="correct" data-search="dataset/banh_mi/1.jpg">
+        <a href="../../dataset/banh_mi/1.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_mi/1.jpg"
+            alt="Bánh mì — dataset/banh_mi/1.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh mì</h2>
+          <code>dataset/banh_mi/1.jpg</code>
+          <p class="meta">460x434 · reference · 8.39s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh mì · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh mì. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh mì" data-state="correct" data-search="dataset/banh_mi/2.jpg">
+        <a href="../../dataset/banh_mi/2.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_mi/2.jpg"
+            alt="Bánh mì — dataset/banh_mi/2.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh mì</h2>
+          <code>dataset/banh_mi/2.jpg</code>
+          <p class="meta">642x478 · reference · 8.17s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh mì · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh mì. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh mì" data-state="correct" data-search="dataset/banh_mi/3.jpg">
+        <a href="../../dataset/banh_mi/3.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_mi/3.jpg"
+            alt="Bánh mì — dataset/banh_mi/3.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh mì</h2>
+          <code>dataset/banh_mi/3.jpg</code>
+          <p class="meta">412x485 · reference · 7.98s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh mì · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh mì. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh mì" data-state="correct" data-search="dataset/banh_mi/4.jpg">
+        <a href="../../dataset/banh_mi/4.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_mi/4.jpg"
+            alt="Bánh mì — dataset/banh_mi/4.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh mì</h2>
+          <code>dataset/banh_mi/4.jpg</code>
+          <p class="meta">554x554 · reference · 8.17s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh mì · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh mì. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh mì" data-state="correct" data-search="dataset/banh_mi/5.jpg">
+        <a href="../../dataset/banh_mi/5.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_mi/5.jpg"
+            alt="Bánh mì — dataset/banh_mi/5.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh mì</h2>
+          <code>dataset/banh_mi/5.jpg</code>
+          <p class="meta">452x678 · development · 8.88s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh mì · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh mì. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh mì" data-state="correct" data-search="dataset/banh_mi/6.jpg">
+        <a href="../../dataset/banh_mi/6.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_mi/6.jpg"
+            alt="Bánh mì — dataset/banh_mi/6.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh mì</h2>
+          <code>dataset/banh_mi/6.jpg</code>
+          <p class="meta">678x452 · development · 8.85s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh mì · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh mì. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bánh mì" data-state="correct" data-search="dataset/banh_mi/7.jpg">
+        <a href="../../dataset/banh_mi/7.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/banh_mi/7.jpg"
+            alt="Bánh mì — dataset/banh_mi/7.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bánh mì</h2>
+          <code>dataset/banh_mi/7.jpg</code>
+          <p class="meta">387x516 · test · 8.08s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bánh mì · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bánh mì. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bột chiên" data-state="correct" data-search="dataset/bot_chien/1.jpg">
+        <a href="../../dataset/bot_chien/1.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/bot_chien/1.jpg"
+            alt="Bột chiên — dataset/bot_chien/1.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bột chiên</h2>
+          <code>dataset/bot_chien/1.jpg</code>
+          <p class="meta">594x336 · reference · 20.56s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bột chiên · reference-features</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bột chiên. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bột chiên" data-state="correct" data-search="dataset/bot_chien/10.jpg">
+        <a href="../../dataset/bot_chien/10.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/bot_chien/10.jpg"
+            alt="Bột chiên — dataset/bot_chien/10.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bột chiên</h2>
+          <code>dataset/bot_chien/10.jpg</code>
+          <p class="meta">447x447 · reference · 28.98s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bột chiên · reference-features</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bột chiên. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bột chiên" data-state="correct" data-search="dataset/bot_chien/2.jpg">
+        <a href="../../dataset/bot_chien/2.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/bot_chien/2.jpg"
+            alt="Bột chiên — dataset/bot_chien/2.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bột chiên</h2>
+          <code>dataset/bot_chien/2.jpg</code>
+          <p class="meta">597x335 · test · 8.82s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bột chiên · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bột chiên. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bột chiên" data-state="correct" data-search="dataset/bot_chien/3.jpg">
+        <a href="../../dataset/bot_chien/3.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/bot_chien/3.jpg"
+            alt="Bột chiên — dataset/bot_chien/3.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bột chiên</h2>
+          <code>dataset/bot_chien/3.jpg</code>
+          <p class="meta">554x554 · development · 8.77s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bột chiên · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bột chiên. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bột chiên" data-state="correct" data-search="dataset/bot_chien/4.jpg">
+        <a href="../../dataset/bot_chien/4.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/bot_chien/4.jpg"
+            alt="Bột chiên — dataset/bot_chien/4.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bột chiên</h2>
+          <code>dataset/bot_chien/4.jpg</code>
+          <p class="meta">594x336 · development · 21.04s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bột chiên · reference-features</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bột chiên. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bột chiên" data-state="correct" data-search="dataset/bot_chien/5.jpg">
+        <a href="../../dataset/bot_chien/5.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/bot_chien/5.jpg"
+            alt="Bột chiên — dataset/bot_chien/5.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bột chiên</h2>
+          <code>dataset/bot_chien/5.jpg</code>
+          <p class="meta">515x388 · test · 9.05s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bột chiên · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bột chiên. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bột chiên" data-state="correct" data-search="dataset/bot_chien/6.jpg">
+        <a href="../../dataset/bot_chien/6.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/bot_chien/6.jpg"
+            alt="Bột chiên — dataset/bot_chien/6.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bột chiên</h2>
+          <code>dataset/bot_chien/6.jpg</code>
+          <p class="meta">540x360 · reference · 9.69s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bột chiên · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bột chiên. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bột chiên" data-state="correct" data-search="dataset/bot_chien/7.jpg">
+        <a href="../../dataset/bot_chien/7.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/bot_chien/7.jpg"
+            alt="Bột chiên — dataset/bot_chien/7.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bột chiên</h2>
+          <code>dataset/bot_chien/7.jpg</code>
+          <p class="meta">678x452 · reference · 8.62s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bột chiên · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bột chiên. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bột chiên" data-state="correct" data-search="dataset/bot_chien/8.jpg">
+        <a href="../../dataset/bot_chien/8.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/bot_chien/8.jpg"
+            alt="Bột chiên — dataset/bot_chien/8.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bột chiên</h2>
+          <code>dataset/bot_chien/8.jpg</code>
+          <p class="meta">600x400 · reference · 8.8s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bột chiên · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bột chiên. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Bột chiên" data-state="correct" data-search="dataset/bot_chien/9.jpg">
+        <a href="../../dataset/bot_chien/9.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/bot_chien/9.jpg"
+            alt="Bột chiên — dataset/bot_chien/9.jpg"
+        /></a>
+        <div class="body">
+          <h2>Bột chiên</h2>
+          <code>dataset/bot_chien/9.jpg</code>
+          <p class="meta">547x365 · development · 9.09s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Bột chiên · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Bột chiên. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Cà phê" data-state="correct" data-search="dataset/ca_phe/1.jpg">
+        <a href="../../dataset/ca_phe/1.jpg" target="_blank" rel="noopener"
+          ><img loading="lazy" src="../../dataset/ca_phe/1.jpg" alt="Cà phê — dataset/ca_phe/1.jpg"
+        /></a>
+        <div class="body">
+          <h2>Cà phê</h2>
+          <code>dataset/ca_phe/1.jpg</code>
+          <p class="meta">404x495 · development · 8.82s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Cà phê · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Cà phê. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Cà phê" data-state="correct" data-search="dataset/ca_phe/2.jpg">
+        <a href="../../dataset/ca_phe/2.jpg" target="_blank" rel="noopener"
+          ><img loading="lazy" src="../../dataset/ca_phe/2.jpg" alt="Cà phê — dataset/ca_phe/2.jpg"
+        /></a>
+        <div class="body">
+          <h2>Cà phê</h2>
+          <code>dataset/ca_phe/2.jpg</code>
+          <p class="meta">638x480 · reference · 8.76s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Cà phê · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Cà phê. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Cà phê" data-state="correct" data-search="dataset/ca_phe/3.jpg">
+        <a href="../../dataset/ca_phe/3.jpg" target="_blank" rel="noopener"
+          ><img loading="lazy" src="../../dataset/ca_phe/3.jpg" alt="Cà phê — dataset/ca_phe/3.jpg"
+        /></a>
+        <div class="body">
+          <h2>Cà phê</h2>
+          <code>dataset/ca_phe/3.jpg</code>
+          <p class="meta">594x336 · test · 8.73s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Cà phê · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Cà phê. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Cà phê" data-state="correct" data-search="dataset/ca_phe/4.jpg">
+        <a href="../../dataset/ca_phe/4.jpg" target="_blank" rel="noopener"
+          ><img loading="lazy" src="../../dataset/ca_phe/4.jpg" alt="Cà phê — dataset/ca_phe/4.jpg"
+        /></a>
+        <div class="body">
+          <h2>Cà phê</h2>
+          <code>dataset/ca_phe/4.jpg</code>
+          <p class="meta">478x418 · reference · 8.62s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Cà phê · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Cà phê. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Cà phê" data-state="abstained" data-search="dataset/ca_phe/5.jpg">
+        <a href="../../dataset/ca_phe/5.jpg" target="_blank" rel="noopener"
+          ><img loading="lazy" src="../../dataset/ca_phe/5.jpg" alt="Cà phê — dataset/ca_phe/5.jpg"
+        /></a>
+        <div class="body">
+          <h2>Cà phê</h2>
+          <code>dataset/ca_phe/5.jpg</code>
+          <p class="meta">473x648 · development · 11.31s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="abstained">Chưa chắc</b></p>
+          <p>Chưa xác định món ·</p>
+          <p class="note">
+            Chưa thấy đủ đặc điểm để phân biệt món này với các món gần giống. Chụp rõ hình dạng phần
+            bánh, nhân hoặc nước dùng nhé.
+          </p>
+          <p class="note">
+            Ly tối màu chụp ngoài trời khó phân biệt cà phê với trà đá/cola bằng một ảnh. Thêm ảnh
+            quá trình pha hoặc góc nhìn rõ crema/lớp cà phê; hệ thống ưu tiên từ chối khi chưa chắc.
+          </p>
+        </div>
+      </article>
+      <article data-family="Cà phê" data-state="correct" data-search="dataset/ca_phe/6.jpg">
+        <a href="../../dataset/ca_phe/6.jpg" target="_blank" rel="noopener"
+          ><img loading="lazy" src="../../dataset/ca_phe/6.jpg" alt="Cà phê — dataset/ca_phe/6.jpg"
+        /></a>
+        <div class="body">
+          <h2>Cà phê</h2>
+          <code>dataset/ca_phe/6.jpg</code>
+          <p class="meta">452x678 · reference · 9.07s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Cà phê · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Cà phê. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Cà phê" data-state="correct" data-search="dataset/ca_phe/7.jpg">
+        <a href="../../dataset/ca_phe/7.jpg" target="_blank" rel="noopener"
+          ><img loading="lazy" src="../../dataset/ca_phe/7.jpg" alt="Cà phê — dataset/ca_phe/7.jpg"
+        /></a>
+        <div class="body">
+          <h2>Cà phê</h2>
+          <code>dataset/ca_phe/7.jpg</code>
+          <p class="meta">515x388 · test · 10.98s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Cà phê · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Cà phê. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Cà phê" data-state="correct" data-search="dataset/ca_phe/images.jpg">
+        <a href="../../dataset/ca_phe/images.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/ca_phe/images.jpg"
+            alt="Cà phê — dataset/ca_phe/images.jpg"
+        /></a>
+        <div class="body">
+          <h2>Cà phê</h2>
+          <code>dataset/ca_phe/images.jpg</code>
+          <p class="meta">515x388 · reference · 7.6s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Cà phê · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Cà phê. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Chè đậu xanh"
+        data-state="correct"
+        data-search="dataset/che_dau_xanh/1.jpg"
+      >
+        <a href="../../dataset/che_dau_xanh/1.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/che_dau_xanh/1.jpg"
+            alt="Chè đậu xanh — dataset/che_dau_xanh/1.jpg"
+        /></a>
+        <div class="body">
+          <h2>Chè đậu xanh</h2>
+          <code>dataset/che_dau_xanh/1.jpg</code>
+          <p class="meta">594x336 · reference · 8.61s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Chè đậu xanh · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Chè đậu xanh. Thông tin nguyên liệu và biến thể lấy từ danh mục,
+            chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Chè đậu xanh"
+        data-state="correct"
+        data-search="dataset/che_dau_xanh/2.jpg"
+      >
+        <a href="../../dataset/che_dau_xanh/2.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/che_dau_xanh/2.jpg"
+            alt="Chè đậu xanh — dataset/che_dau_xanh/2.jpg"
+        /></a>
+        <div class="body">
+          <h2>Chè đậu xanh</h2>
+          <code>dataset/che_dau_xanh/2.jpg</code>
+          <p class="meta">597x335 · reference · 8.22s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Chè đậu xanh · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Chè đậu xanh. Thông tin nguyên liệu và biến thể lấy từ danh mục,
+            chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Chè đậu xanh"
+        data-state="correct"
+        data-search="dataset/che_dau_xanh/3.jpg"
+      >
+        <a href="../../dataset/che_dau_xanh/3.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/che_dau_xanh/3.jpg"
+            alt="Chè đậu xanh — dataset/che_dau_xanh/3.jpg"
+        /></a>
+        <div class="body">
+          <h2>Chè đậu xanh</h2>
+          <code>dataset/che_dau_xanh/3.jpg</code>
+          <p class="meta">594x336 · development · 7.94s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Chè đậu xanh · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Chè đậu xanh. Thông tin nguyên liệu và biến thể lấy từ danh mục,
+            chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Chè đậu xanh"
+        data-state="correct"
+        data-search="dataset/che_dau_xanh/4.jpg"
+      >
+        <a href="../../dataset/che_dau_xanh/4.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/che_dau_xanh/4.jpg"
+            alt="Chè đậu xanh — dataset/che_dau_xanh/4.jpg"
+        /></a>
+        <div class="body">
+          <h2>Chè đậu xanh</h2>
+          <code>dataset/che_dau_xanh/4.jpg</code>
+          <p class="meta">547x365 · reference · 8.11s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Chè đậu xanh · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Chè đậu xanh. Thông tin nguyên liệu và biến thể lấy từ danh mục,
+            chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Chè đậu xanh"
+        data-state="correct"
+        data-search="dataset/che_dau_xanh/5.jpg"
+      >
+        <a href="../../dataset/che_dau_xanh/5.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/che_dau_xanh/5.jpg"
+            alt="Chè đậu xanh — dataset/che_dau_xanh/5.jpg"
+        /></a>
+        <div class="body">
+          <h2>Chè đậu xanh</h2>
+          <code>dataset/che_dau_xanh/5.jpg</code>
+          <p class="meta">554x554 · test · 8.12s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Chè đậu xanh · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Chè đậu xanh. Thông tin nguyên liệu và biến thể lấy từ danh mục,
+            chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Chè đậu xanh"
+        data-state="correct"
+        data-search="dataset/che_dau_xanh/6.jpg"
+      >
+        <a href="../../dataset/che_dau_xanh/6.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/che_dau_xanh/6.jpg"
+            alt="Chè đậu xanh — dataset/che_dau_xanh/6.jpg"
+        /></a>
+        <div class="body">
+          <h2>Chè đậu xanh</h2>
+          <code>dataset/che_dau_xanh/6.jpg</code>
+          <p class="meta">470x425 · development · 8.12s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Chè đậu xanh · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Chè đậu xanh. Thông tin nguyên liệu và biến thể lấy từ danh mục,
+            chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Chè đậu xanh"
+        data-state="correct"
+        data-search="dataset/che_dau_xanh/7.jpg"
+      >
+        <a href="../../dataset/che_dau_xanh/7.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/che_dau_xanh/7.jpg"
+            alt="Chè đậu xanh — dataset/che_dau_xanh/7.jpg"
+        /></a>
+        <div class="body">
+          <h2>Chè đậu xanh</h2>
+          <code>dataset/che_dau_xanh/7.jpg</code>
+          <p class="meta">494x619 · test · 14.32s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Chè đậu xanh · qwen-review</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Chè đậu xanh. Thông tin nguyên liệu và biến thể lấy từ danh mục,
+            chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Chè đậu xanh"
+        data-state="correct"
+        data-search="dataset/che_dau_xanh/8.jpg"
+      >
+        <a href="../../dataset/che_dau_xanh/8.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/che_dau_xanh/8.jpg"
+            alt="Chè đậu xanh — dataset/che_dau_xanh/8.jpg"
+        /></a>
+        <div class="body">
+          <h2>Chè đậu xanh</h2>
+          <code>dataset/che_dau_xanh/8.jpg</code>
+          <p class="meta">534x374 · reference · 8.14s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Chè đậu xanh · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Chè đậu xanh. Thông tin nguyên liệu và biến thể lấy từ danh mục,
+            chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Tàu hũ" data-state="correct" data-search="dataset/dau_hu/1.jpg">
+        <a href="../../dataset/dau_hu/1.jpg" target="_blank" rel="noopener"
+          ><img loading="lazy" src="../../dataset/dau_hu/1.jpg" alt="Tàu hũ — dataset/dau_hu/1.jpg"
+        /></a>
+        <div class="body">
+          <h2>Tàu hũ</h2>
+          <code>dataset/dau_hu/1.jpg</code>
+          <p class="meta">594x336 · reference · 8.83s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Tàu hũ nước đường · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Tàu hũ nước đường. Thông tin nguyên liệu và biến thể lấy từ danh
+            mục, chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Tàu hũ" data-state="correct" data-search="dataset/dau_hu/10.jpg">
+        <a href="../../dataset/dau_hu/10.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/dau_hu/10.jpg"
+            alt="Tàu hũ — dataset/dau_hu/10.jpg"
+        /></a>
+        <div class="body">
+          <h2>Tàu hũ</h2>
+          <code>dataset/dau_hu/10.jpg</code>
+          <p class="meta">597x335 · reference · 8.12s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Tàu hũ nước đường · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Tàu hũ nước đường. Thông tin nguyên liệu và biến thể lấy từ danh
+            mục, chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Tàu hũ" data-state="correct" data-search="dataset/dau_hu/11.jpg">
+        <a href="../../dataset/dau_hu/11.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/dau_hu/11.jpg"
+            alt="Tàu hũ — dataset/dau_hu/11.jpg"
+        /></a>
+        <div class="body">
+          <h2>Tàu hũ</h2>
+          <code>dataset/dau_hu/11.jpg</code>
+          <p class="meta">678x452 · development · 9.44s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Tàu hũ nước đường · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Tàu hũ nước đường. Thông tin nguyên liệu và biến thể lấy từ danh
+            mục, chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Tàu hũ" data-state="correct" data-search="dataset/dau_hu/2.jpg">
+        <a href="../../dataset/dau_hu/2.jpg" target="_blank" rel="noopener"
+          ><img loading="lazy" src="../../dataset/dau_hu/2.jpg" alt="Tàu hũ — dataset/dau_hu/2.jpg"
+        /></a>
+        <div class="body">
+          <h2>Tàu hũ</h2>
+          <code>dataset/dau_hu/2.jpg</code>
+          <p class="meta">586x341 · reference · 8.8s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Tàu hũ nước đường · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Tàu hũ nước đường. Thông tin nguyên liệu và biến thể lấy từ danh
+            mục, chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Tàu hũ" data-state="correct" data-search="dataset/dau_hu/3.jpg">
+        <a href="../../dataset/dau_hu/3.jpg" target="_blank" rel="noopener"
+          ><img loading="lazy" src="../../dataset/dau_hu/3.jpg" alt="Tàu hũ — dataset/dau_hu/3.jpg"
+        /></a>
+        <div class="body">
+          <h2>Tàu hũ</h2>
+          <code>dataset/dau_hu/3.jpg</code>
+          <p class="meta">600x400 · reference · 8.1s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Tàu hũ nước đường · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Tàu hũ nước đường. Thông tin nguyên liệu và biến thể lấy từ danh
+            mục, chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Tàu hũ" data-state="correct" data-search="dataset/dau_hu/4.jpg">
+        <a href="../../dataset/dau_hu/4.jpg" target="_blank" rel="noopener"
+          ><img loading="lazy" src="../../dataset/dau_hu/4.jpg" alt="Tàu hũ — dataset/dau_hu/4.jpg"
+        /></a>
+        <div class="body">
+          <h2>Tàu hũ</h2>
+          <code>dataset/dau_hu/4.jpg</code>
+          <p class="meta">600x400 · reference · 9.44s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Tàu hũ nước đường · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Tàu hũ nước đường. Thông tin nguyên liệu và biến thể lấy từ danh
+            mục, chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Tàu hũ" data-state="correct" data-search="dataset/dau_hu/5.jpg">
+        <a href="../../dataset/dau_hu/5.jpg" target="_blank" rel="noopener"
+          ><img loading="lazy" src="../../dataset/dau_hu/5.jpg" alt="Tàu hũ — dataset/dau_hu/5.jpg"
+        /></a>
+        <div class="body">
+          <h2>Tàu hũ</h2>
+          <code>dataset/dau_hu/5.jpg</code>
+          <p class="meta">597x335 · development · 8.55s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Tàu hũ nước đường · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Tàu hũ nước đường. Thông tin nguyên liệu và biến thể lấy từ danh
+            mục, chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Tàu hũ" data-state="correct" data-search="dataset/dau_hu/6.jpg">
+        <a href="../../dataset/dau_hu/6.jpg" target="_blank" rel="noopener"
+          ><img loading="lazy" src="../../dataset/dau_hu/6.jpg" alt="Tàu hũ — dataset/dau_hu/6.jpg"
+        /></a>
+        <div class="body">
+          <h2>Tàu hũ</h2>
+          <code>dataset/dau_hu/6.jpg</code>
+          <p class="meta">399x501 · reference · 15.93s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Tàu hũ nước đường · qwen-review</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Tàu hũ nước đường. Thông tin nguyên liệu và biến thể lấy từ danh
+            mục, chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Tàu hũ" data-state="correct" data-search="dataset/dau_hu/7.jpg">
+        <a href="../../dataset/dau_hu/7.jpg" target="_blank" rel="noopener"
+          ><img loading="lazy" src="../../dataset/dau_hu/7.jpg" alt="Tàu hũ — dataset/dau_hu/7.jpg"
+        /></a>
+        <div class="body">
+          <h2>Tàu hũ</h2>
+          <code>dataset/dau_hu/7.jpg</code>
+          <p class="meta">493x405 · test · 9.49s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Tàu hũ nước đường · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Tàu hũ nước đường. Thông tin nguyên liệu và biến thể lấy từ danh
+            mục, chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Tàu hũ" data-state="correct" data-search="dataset/dau_hu/8.jpg">
+        <a href="../../dataset/dau_hu/8.jpg" target="_blank" rel="noopener"
+          ><img loading="lazy" src="../../dataset/dau_hu/8.jpg" alt="Tàu hũ — dataset/dau_hu/8.jpg"
+        /></a>
+        <div class="body">
+          <h2>Tàu hũ</h2>
+          <code>dataset/dau_hu/8.jpg</code>
+          <p class="meta">738x414 · test · 9.24s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Tàu hũ nước đường · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Tàu hũ nước đường. Thông tin nguyên liệu và biến thể lấy từ danh
+            mục, chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Tàu hũ" data-state="correct" data-search="dataset/dau_hu/9.jpg">
+        <a href="../../dataset/dau_hu/9.jpg" target="_blank" rel="noopener"
+          ><img loading="lazy" src="../../dataset/dau_hu/9.jpg" alt="Tàu hũ — dataset/dau_hu/9.jpg"
+        /></a>
+        <div class="body">
+          <h2>Tàu hũ</h2>
+          <code>dataset/dau_hu/9.jpg</code>
+          <p class="meta">738x414 · reference · 8.26s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Tàu hũ nước đường · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Tàu hũ nước đường. Thông tin nguyên liệu và biến thể lấy từ danh
+            mục, chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Gỏi khô bò" data-state="correct" data-search="dataset/goi_kho_bo/1.jpg">
+        <a href="../../dataset/goi_kho_bo/1.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/goi_kho_bo/1.jpg"
+            alt="Gỏi khô bò — dataset/goi_kho_bo/1.jpg"
+        /></a>
+        <div class="body">
+          <h2>Gỏi khô bò</h2>
+          <code>dataset/goi_kho_bo/1.jpg</code>
+          <p class="meta">510x392 · development · 18.23s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Gỏi khô bò · qwen-review</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Gỏi khô bò. Thông tin nguyên liệu và biến thể lấy từ danh mục,
+            chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Gỏi khô bò"
+        data-state="correct"
+        data-search="dataset/goi_kho_bo/10.jpg"
+      >
+        <a href="../../dataset/goi_kho_bo/10.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/goi_kho_bo/10.jpg"
+            alt="Gỏi khô bò — dataset/goi_kho_bo/10.jpg"
+        /></a>
+        <div class="body">
+          <h2>Gỏi khô bò</h2>
+          <code>dataset/goi_kho_bo/10.jpg</code>
+          <p class="meta">714x418 · reference · 17.0s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Gỏi khô bò · qwen-review</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Gỏi khô bò. Thông tin nguyên liệu và biến thể lấy từ danh mục,
+            chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Gỏi khô bò" data-state="correct" data-search="dataset/goi_kho_bo/2.jpg">
+        <a href="../../dataset/goi_kho_bo/2.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/goi_kho_bo/2.jpg"
+            alt="Gỏi khô bò — dataset/goi_kho_bo/2.jpg"
+        /></a>
+        <div class="body">
+          <h2>Gỏi khô bò</h2>
+          <code>dataset/goi_kho_bo/2.jpg</code>
+          <p class="meta">554x554 · development · 9.17s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Gỏi khô bò · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Gỏi khô bò. Thông tin nguyên liệu và biến thể lấy từ danh mục,
+            chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Gỏi khô bò" data-state="correct" data-search="dataset/goi_kho_bo/3.jpg">
+        <a href="../../dataset/goi_kho_bo/3.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/goi_kho_bo/3.jpg"
+            alt="Gỏi khô bò — dataset/goi_kho_bo/3.jpg"
+        /></a>
+        <div class="body">
+          <h2>Gỏi khô bò</h2>
+          <code>dataset/goi_kho_bo/3.jpg</code>
+          <p class="meta">495x618 · test · 9.04s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Gỏi khô bò · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Gỏi khô bò. Thông tin nguyên liệu và biến thể lấy từ danh mục,
+            chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Gỏi khô bò" data-state="correct" data-search="dataset/goi_kho_bo/4.jpg">
+        <a href="../../dataset/goi_kho_bo/4.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/goi_kho_bo/4.jpg"
+            alt="Gỏi khô bò — dataset/goi_kho_bo/4.jpg"
+        /></a>
+        <div class="body">
+          <h2>Gỏi khô bò</h2>
+          <code>dataset/goi_kho_bo/4.jpg</code>
+          <p class="meta">575x533 · reference · 8.5s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Gỏi khô bò · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Gỏi khô bò. Thông tin nguyên liệu và biến thể lấy từ danh mục,
+            chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Gỏi khô bò" data-state="correct" data-search="dataset/goi_kho_bo/5.jpg">
+        <a href="../../dataset/goi_kho_bo/5.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/goi_kho_bo/5.jpg"
+            alt="Gỏi khô bò — dataset/goi_kho_bo/5.jpg"
+        /></a>
+        <div class="body">
+          <h2>Gỏi khô bò</h2>
+          <code>dataset/goi_kho_bo/5.jpg</code>
+          <p class="meta">554x554 · reference · 17.08s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Gỏi khô bò · qwen-review</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Gỏi khô bò. Thông tin nguyên liệu và biến thể lấy từ danh mục,
+            chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Gỏi khô bò" data-state="error" data-search="dataset/goi_kho_bo/6.jpg">
+        <a href="../../dataset/goi_kho_bo/6.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/goi_kho_bo/6.jpg"
+            alt="Gỏi khô bò — dataset/goi_kho_bo/6.jpg"
+        /></a>
+        <div class="body">
+          <h2>Gỏi khô bò</h2>
+          <code>dataset/goi_kho_bo/6.jpg</code>
+          <p class="meta">299x168 · excluded · 0.01s</p>
+          <p>Trước: <b>Lỗi/ảnh nhỏ</b> · Sau: <b class="error">Lỗi/ảnh nhỏ</b></p>
+          <p>·</p>
+          <p class="note">Ảnh quá nhỏ để phân biệt món. Chọn ảnh gốc ít nhất 224 px mỗi chiều.</p>
+          <p class="note">
+            Ảnh 299×168 px dưới ngưỡng cạnh ngắn 224 px. Cần bản gốc lớn hơn; phóng to thumbnail
+            không bổ sung chi tiết.
+          </p>
+        </div>
+      </article>
+      <article data-family="Gỏi khô bò" data-state="error" data-search="dataset/goi_kho_bo/7.jpg">
+        <a href="../../dataset/goi_kho_bo/7.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/goi_kho_bo/7.jpg"
+            alt="Gỏi khô bò — dataset/goi_kho_bo/7.jpg"
+        /></a>
+        <div class="body">
+          <h2>Gỏi khô bò</h2>
+          <code>dataset/goi_kho_bo/7.jpg</code>
+          <p class="meta">251x201 · excluded · 0.0s</p>
+          <p>Trước: <b>Lỗi/ảnh nhỏ</b> · Sau: <b class="error">Lỗi/ảnh nhỏ</b></p>
+          <p>·</p>
+          <p class="note">Ảnh quá nhỏ để phân biệt món. Chọn ảnh gốc ít nhất 224 px mỗi chiều.</p>
+          <p class="note">
+            Ảnh 251×201 px dưới ngưỡng cạnh ngắn 224 px. Cần bản gốc lớn hơn; phóng to thumbnail
+            không bổ sung chi tiết.
+          </p>
+        </div>
+      </article>
+      <article data-family="Gỏi khô bò" data-state="correct" data-search="dataset/goi_kho_bo/8.jpg">
+        <a href="../../dataset/goi_kho_bo/8.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/goi_kho_bo/8.jpg"
+            alt="Gỏi khô bò — dataset/goi_kho_bo/8.jpg"
+        /></a>
+        <div class="body">
+          <h2>Gỏi khô bò</h2>
+          <code>dataset/goi_kho_bo/8.jpg</code>
+          <p class="meta">506x605 · reference · 9.21s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Gỏi khô bò · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Gỏi khô bò. Thông tin nguyên liệu và biến thể lấy từ danh mục,
+            chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article data-family="Gỏi khô bò" data-state="error" data-search="dataset/goi_kho_bo/9.jpg">
+        <a href="../../dataset/goi_kho_bo/9.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/goi_kho_bo/9.jpg"
+            alt="Gỏi khô bò — dataset/goi_kho_bo/9.jpg"
+        /></a>
+        <div class="body">
+          <h2>Gỏi khô bò</h2>
+          <code>dataset/goi_kho_bo/9.jpg</code>
+          <p class="meta">204x247 · excluded · 0.0s</p>
+          <p>Trước: <b>Lỗi/ảnh nhỏ</b> · Sau: <b class="error">Lỗi/ảnh nhỏ</b></p>
+          <p>·</p>
+          <p class="note">Ảnh quá nhỏ để phân biệt món. Chọn ảnh gốc ít nhất 224 px mỗi chiều.</p>
+          <p class="note">
+            Ảnh 204×247 px dưới ngưỡng cạnh ngắn 224 px. Cần bản gốc lớn hơn; phóng to thumbnail
+            không bổ sung chi tiết.
+          </p>
+        </div>
+      </article>
+      <article
+        data-family="Gỏi măng cụt"
+        data-state="correct"
+        data-search="dataset/goi_mang_cut/1.jpg"
+      >
+        <a href="../../dataset/goi_mang_cut/1.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/goi_mang_cut/1.jpg"
+            alt="Gỏi măng cụt — dataset/goi_mang_cut/1.jpg"
+        /></a>
+        <div class="body">
+          <h2>Gỏi măng cụt</h2>
+          <code>dataset/goi_mang_cut/1.jpg</code>
+          <p class="meta">678x452 · development · 8.66s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Gỏi gà măng cụt · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Gỏi gà măng cụt. Thông tin nguyên liệu và biến thể lấy từ danh
+            mục, chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Gỏi măng cụt"
+        data-state="correct"
+        data-search="dataset/goi_mang_cut/2.jpg"
+      >
+        <a href="../../dataset/goi_mang_cut/2.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/goi_mang_cut/2.jpg"
+            alt="Gỏi măng cụt — dataset/goi_mang_cut/2.jpg"
+        /></a>
+        <div class="body">
+          <h2>Gỏi măng cụt</h2>
+          <code>dataset/goi_mang_cut/2.jpg</code>
+          <p class="meta">554x554 · development · 8.74s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Gỏi gà măng cụt · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Gỏi gà măng cụt. Thông tin nguyên liệu và biến thể lấy từ danh
+            mục, chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Gỏi măng cụt"
+        data-state="correct"
+        data-search="dataset/goi_mang_cut/3.jpg"
+      >
+        <a href="../../dataset/goi_mang_cut/3.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/goi_mang_cut/3.jpg"
+            alt="Gỏi măng cụt — dataset/goi_mang_cut/3.jpg"
+        /></a>
+        <div class="body">
+          <h2>Gỏi măng cụt</h2>
+          <code>dataset/goi_mang_cut/3.jpg</code>
+          <p class="meta">594x336 · reference · 18.14s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Gỏi gà măng cụt · reference-features</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Gỏi gà măng cụt. Thông tin nguyên liệu và biến thể lấy từ danh
+            mục, chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Gỏi măng cụt"
+        data-state="correct"
+        data-search="dataset/goi_mang_cut/4.jpg"
+      >
+        <a href="../../dataset/goi_mang_cut/4.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/goi_mang_cut/4.jpg"
+            alt="Gỏi măng cụt — dataset/goi_mang_cut/4.jpg"
+        /></a>
+        <div class="body">
+          <h2>Gỏi măng cụt</h2>
+          <code>dataset/goi_mang_cut/4.jpg</code>
+          <p class="meta">470x399 · reference · 9.26s</p>
+          <p>Trước: <b>Sai nhãn</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Gỏi gà măng cụt · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Gỏi gà măng cụt. Thông tin nguyên liệu và biến thể lấy từ danh
+            mục, chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Gỏi măng cụt"
+        data-state="correct"
+        data-search="dataset/goi_mang_cut/5.jpg"
+      >
+        <a href="../../dataset/goi_mang_cut/5.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/goi_mang_cut/5.jpg"
+            alt="Gỏi măng cụt — dataset/goi_mang_cut/5.jpg"
+        /></a>
+        <div class="body">
+          <h2>Gỏi măng cụt</h2>
+          <code>dataset/goi_mang_cut/5.jpg</code>
+          <p class="meta">597x335 · reference · 20.47s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Gỏi gà măng cụt · reference-features</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Gỏi gà măng cụt. Thông tin nguyên liệu và biến thể lấy từ danh
+            mục, chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Gỏi măng cụt"
+        data-state="correct"
+        data-search="dataset/goi_mang_cut/6.jpg"
+      >
+        <a href="../../dataset/goi_mang_cut/6.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/goi_mang_cut/6.jpg"
+            alt="Gỏi măng cụt — dataset/goi_mang_cut/6.jpg"
+        /></a>
+        <div class="body">
+          <h2>Gỏi măng cụt</h2>
+          <code>dataset/goi_mang_cut/6.jpg</code>
+          <p class="meta">613x501 · test · 9.08s</p>
+          <p>Trước: <b>Sai nhãn</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Gỏi gà măng cụt · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Gỏi gà măng cụt. Thông tin nguyên liệu và biến thể lấy từ danh
+            mục, chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Gỏi măng cụt"
+        data-state="correct"
+        data-search="dataset/goi_mang_cut/7.jpg"
+      >
+        <a href="../../dataset/goi_mang_cut/7.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/goi_mang_cut/7.jpg"
+            alt="Gỏi măng cụt — dataset/goi_mang_cut/7.jpg"
+        /></a>
+        <div class="body">
+          <h2>Gỏi măng cụt</h2>
+          <code>dataset/goi_mang_cut/7.jpg</code>
+          <p class="meta">515x388 · reference · 29.51s</p>
+          <p>Trước: <b>Sai nhãn</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Gỏi gà măng cụt · reference-features</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Gỏi gà măng cụt. Thông tin nguyên liệu và biến thể lấy từ danh
+            mục, chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Gỏi măng cụt"
+        data-state="correct"
+        data-search="dataset/goi_mang_cut/8.jpg"
+      >
+        <a href="../../dataset/goi_mang_cut/8.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/goi_mang_cut/8.jpg"
+            alt="Gỏi măng cụt — dataset/goi_mang_cut/8.jpg"
+        /></a>
+        <div class="body">
+          <h2>Gỏi măng cụt</h2>
+          <code>dataset/goi_mang_cut/8.jpg</code>
+          <p class="meta">498x401 · test · 9.38s</p>
+          <p>Trước: <b>Sai nhãn</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Gỏi gà măng cụt · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Gỏi gà măng cụt. Thông tin nguyên liệu và biến thể lấy từ danh
+            mục, chưa được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Nước mía"
+        data-state="correct"
+        data-search="dataset/nuoc_mia/images (1).jpg"
+      >
+        <a href="../../dataset/nuoc_mia/images%20%281%29.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/nuoc_mia/images%20%281%29.jpg"
+            alt="Nước mía — dataset/nuoc_mia/images (1).jpg"
+        /></a>
+        <div class="body">
+          <h2>Nước mía</h2>
+          <code>dataset/nuoc_mia/images (1).jpg</code>
+          <p class="meta">631x485 · reference · 18.99s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Nước mía · reference-features</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Nước mía. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Nước mía"
+        data-state="correct"
+        data-search="dataset/nuoc_mia/images (2).jpg"
+      >
+        <a href="../../dataset/nuoc_mia/images%20%282%29.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/nuoc_mia/images%20%282%29.jpg"
+            alt="Nước mía — dataset/nuoc_mia/images (2).jpg"
+        /></a>
+        <div class="body">
+          <h2>Nước mía</h2>
+          <code>dataset/nuoc_mia/images (2).jpg</code>
+          <p class="meta">386x518 · development · 19.54s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Nước mía · reference-features</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Nước mía. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Nước mía"
+        data-state="correct"
+        data-search="dataset/nuoc_mia/images (3).jpg"
+      >
+        <a href="../../dataset/nuoc_mia/images%20%283%29.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/nuoc_mia/images%20%283%29.jpg"
+            alt="Nước mía — dataset/nuoc_mia/images (3).jpg"
+        /></a>
+        <div class="body">
+          <h2>Nước mía</h2>
+          <code>dataset/nuoc_mia/images (3).jpg</code>
+          <p class="meta">375x500 · development · 9.94s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Nước mía · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Nước mía. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Nước mía"
+        data-state="correct"
+        data-search="dataset/nuoc_mia/images (4).jpg"
+      >
+        <a href="../../dataset/nuoc_mia/images%20%284%29.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/nuoc_mia/images%20%284%29.jpg"
+            alt="Nước mía — dataset/nuoc_mia/images (4).jpg"
+        /></a>
+        <div class="body">
+          <h2>Nước mía</h2>
+          <code>dataset/nuoc_mia/images (4).jpg</code>
+          <p class="meta">393x508 · test · 8.77s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Nước mía · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Nước mía. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Nước mía"
+        data-state="correct"
+        data-search="dataset/nuoc_mia/images.jpg"
+      >
+        <a href="../../dataset/nuoc_mia/images.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/nuoc_mia/images.jpg"
+            alt="Nước mía — dataset/nuoc_mia/images.jpg"
+        /></a>
+        <div class="body">
+          <h2>Nước mía</h2>
+          <code>dataset/nuoc_mia/images.jpg</code>
+          <p class="meta">447x447 · reference · 9.49s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Nước mía · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Nước mía. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Phá lấu"
+        data-state="correct"
+        data-search="dataset/pha_lau/images (1).jpg"
+      >
+        <a href="../../dataset/pha_lau/images%20%281%29.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/pha_lau/images%20%281%29.jpg"
+            alt="Phá lấu — dataset/pha_lau/images (1).jpg"
+        /></a>
+        <div class="body">
+          <h2>Phá lấu</h2>
+          <code>dataset/pha_lau/images (1).jpg</code>
+          <p class="meta">594x336 · test · 9.16s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Phá lấu · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Phá lấu. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Phá lấu"
+        data-state="correct"
+        data-search="dataset/pha_lau/images (10).jpg"
+      >
+        <a href="../../dataset/pha_lau/images%20%2810%29.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/pha_lau/images%20%2810%29.jpg"
+            alt="Phá lấu — dataset/pha_lau/images (10).jpg"
+        /></a>
+        <div class="body">
+          <h2>Phá lấu</h2>
+          <code>dataset/pha_lau/images (10).jpg</code>
+          <p class="meta">597x335 · reference · 9.03s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Phá lấu · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Phá lấu. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Phá lấu"
+        data-state="correct"
+        data-search="dataset/pha_lau/images (11).jpg"
+      >
+        <a href="../../dataset/pha_lau/images%20%2811%29.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/pha_lau/images%20%2811%29.jpg"
+            alt="Phá lấu — dataset/pha_lau/images (11).jpg"
+        /></a>
+        <div class="body">
+          <h2>Phá lấu</h2>
+          <code>dataset/pha_lau/images (11).jpg</code>
+          <p class="meta">447x447 · reference · 9.3s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Phá lấu · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Phá lấu. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Phá lấu"
+        data-state="correct"
+        data-search="dataset/pha_lau/images (12).jpg"
+      >
+        <a href="../../dataset/pha_lau/images%20%2812%29.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/pha_lau/images%20%2812%29.jpg"
+            alt="Phá lấu — dataset/pha_lau/images (12).jpg"
+        /></a>
+        <div class="body">
+          <h2>Phá lấu</h2>
+          <code>dataset/pha_lau/images (12).jpg</code>
+          <p class="meta">494x619 · reference · 8.82s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Phá lấu · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Phá lấu. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Phá lấu"
+        data-state="correct"
+        data-search="dataset/pha_lau/images (2).jpg"
+      >
+        <a href="../../dataset/pha_lau/images%20%282%29.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/pha_lau/images%20%282%29.jpg"
+            alt="Phá lấu — dataset/pha_lau/images (2).jpg"
+        /></a>
+        <div class="body">
+          <h2>Phá lấu</h2>
+          <code>dataset/pha_lau/images (2).jpg</code>
+          <p class="meta">447x447 · reference · 8.95s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Phá lấu · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Phá lấu. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Phá lấu"
+        data-state="correct"
+        data-search="dataset/pha_lau/images (3).jpg"
+      >
+        <a href="../../dataset/pha_lau/images%20%283%29.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/pha_lau/images%20%283%29.jpg"
+            alt="Phá lấu — dataset/pha_lau/images (3).jpg"
+        /></a>
+        <div class="body">
+          <h2>Phá lấu</h2>
+          <code>dataset/pha_lau/images (3).jpg</code>
+          <p class="meta">597x335 · development · 8.71s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Phá lấu · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Phá lấu. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Phá lấu"
+        data-state="correct"
+        data-search="dataset/pha_lau/images (4).jpg"
+      >
+        <a href="../../dataset/pha_lau/images%20%284%29.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/pha_lau/images%20%284%29.jpg"
+            alt="Phá lấu — dataset/pha_lau/images (4).jpg"
+        /></a>
+        <div class="body">
+          <h2>Phá lấu</h2>
+          <code>dataset/pha_lau/images (4).jpg</code>
+          <p class="meta">738x414 · reference · 8.71s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Phá lấu · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Phá lấu. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Phá lấu"
+        data-state="abstained"
+        data-search="dataset/pha_lau/images (5).jpg"
+      >
+        <a href="../../dataset/pha_lau/images%20%285%29.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/pha_lau/images%20%285%29.jpg"
+            alt="Phá lấu — dataset/pha_lau/images (5).jpg"
+        /></a>
+        <div class="body">
+          <h2>Phá lấu</h2>
+          <code>dataset/pha_lau/images (5).jpg</code>
+          <p class="meta">738x414 · test · 19.83s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="abstained">Chưa chắc</b></p>
+          <p>Chưa xác định món ·</p>
+          <p class="note">
+            Đã nhìn thấy món ăn hoặc đồ uống, nhưng chưa đủ đặc điểm để xác định nhóm món. Hãy chụp
+            gần phần món chính, để lộ hình dạng và kết cấu rõ hơn.
+          </p>
+          <p class="note">
+            Lượt kiểm tra đặc điểm xác nhận có đồ ăn và nước dùng, nhưng chưa xác nhận được hình
+            lòng/nếp/tổ ong đủ rõ. Cần góc chụp gần phần cái; không suy ra phá lấu chỉ từ màu nước
+            dùng.
+          </p>
+        </div>
+      </article>
+      <article
+        data-family="Phá lấu"
+        data-state="correct"
+        data-search="dataset/pha_lau/images (6).jpg"
+      >
+        <a href="../../dataset/pha_lau/images%20%286%29.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/pha_lau/images%20%286%29.jpg"
+            alt="Phá lấu — dataset/pha_lau/images (6).jpg"
+        /></a>
+        <div class="body">
+          <h2>Phá lấu</h2>
+          <code>dataset/pha_lau/images (6).jpg</code>
+          <p class="meta">441x453 · reference · 8.88s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Phá lấu · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Phá lấu. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Phá lấu"
+        data-state="correct"
+        data-search="dataset/pha_lau/images (7).jpg"
+      >
+        <a href="../../dataset/pha_lau/images%20%287%29.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/pha_lau/images%20%287%29.jpg"
+            alt="Phá lấu — dataset/pha_lau/images (7).jpg"
+        /></a>
+        <div class="body">
+          <h2>Phá lấu</h2>
+          <code>dataset/pha_lau/images (7).jpg</code>
+          <p class="meta">547x365 · test · 9.17s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Phá lấu · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Phá lấu. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+      <article
+        data-family="Phá lấu"
+        data-state="abstained"
+        data-search="dataset/pha_lau/images (8).jpg"
+      >
+        <a href="../../dataset/pha_lau/images%20%288%29.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/pha_lau/images%20%288%29.jpg"
+            alt="Phá lấu — dataset/pha_lau/images (8).jpg"
+        /></a>
+        <div class="body">
+          <h2>Phá lấu</h2>
+          <code>dataset/pha_lau/images (8).jpg</code>
+          <p class="meta">642x311 · development · 13.45s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="abstained">Chưa chắc</b></p>
+          <p>Chưa xác định món ·</p>
+          <p class="note">
+            Chưa thấy đủ đặc điểm để phân biệt món này với các món gần giống. Chụp rõ hình dạng phần
+            bánh, nhân hoặc nước dùng nhé.
+          </p>
+          <p class="note">
+            Biến thể phá lấu xào mì khác xa phần lớn ảnh phá lấu nước. Cần thêm ảnh tham chiếu xào
+            mì và cận phần lòng có nếp/tổ ong/ống rõ, thay vì gán nhãn dựa vào sợi mì.
+          </p>
+        </div>
+      </article>
+      <article
+        data-family="Phá lấu"
+        data-state="abstained"
+        data-search="dataset/pha_lau/images (9).jpg"
+      >
+        <a href="../../dataset/pha_lau/images%20%289%29.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/pha_lau/images%20%289%29.jpg"
+            alt="Phá lấu — dataset/pha_lau/images (9).jpg"
+        /></a>
+        <div class="body">
+          <h2>Phá lấu</h2>
+          <code>dataset/pha_lau/images (9).jpg</code>
+          <p class="meta">447x447 · reference · 18.7s</p>
+          <p>Trước: <b>Đúng</b> · Sau: <b class="abstained">Chưa chắc</b></p>
+          <p>Chưa xác định món ·</p>
+          <p class="note">
+            Đã nhìn thấy món ăn hoặc đồ uống, nhưng chưa đủ đặc điểm để xác định nhóm món. Hãy chụp
+            gần phần món chính, để lộ hình dạng và kết cấu rõ hơn.
+          </p>
+          <p class="note">
+            Lượt kiểm tra đặc điểm xác nhận có đồ ăn, nhưng các khối sẫm màu trong nước dùng chưa đủ
+            để phân biệt lòng với món hầm khác. Nên bổ sung ảnh phần cái ở góc sáng và gần hơn.
+          </p>
+        </div>
+      </article>
+      <article data-family="Phá lấu" data-state="correct" data-search="dataset/pha_lau/images.jpg">
+        <a href="../../dataset/pha_lau/images.jpg" target="_blank" rel="noopener"
+          ><img
+            loading="lazy"
+            src="../../dataset/pha_lau/images.jpg"
+            alt="Phá lấu — dataset/pha_lau/images.jpg"
+        /></a>
+        <div class="body">
+          <h2>Phá lấu</h2>
+          <code>dataset/pha_lau/images.jpg</code>
+          <p class="meta">447x447 · reference · 9.04s</p>
+          <p>Trước: <b>Chưa chắc</b> · Sau: <b class="correct">Đúng</b></p>
+          <p>Phá lấu · reference-qwen</p>
+          <p class="note">
+            Hình ảnh phù hợp nhóm Phá lấu. Thông tin nguyên liệu và biến thể lấy từ danh mục, chưa
+            được xác minh bằng ảnh.
+          </p>
+          <p class="note"></p>
+        </div>
+      </article>
+    </section>
+  </main>
+  <script>
+    const controls = ['family', 'state', 'search'].map((x) => document.getElementById(x));
+    function filter() {
+      const [f, s, q] = controls.map((x) => x.value.toLowerCase());
+      let n = 0;
+      for (const card of document.querySelectorAll('article')) {
+        card.hidden = !!(
+          (f && card.dataset.family.toLowerCase() !== f) ||
+          (s && card.dataset.state !== s) ||
+          (q && !card.dataset.search.toLowerCase().includes(q))
+        );
+        if (!card.hidden) n++;
+      }
+      document.getElementById('count').textContent = n + ' ảnh đang hiển thị';
+    }
+    controls.forEach((x) => x.addEventListener('input', filter));
+    filter();
+  </script>
+</html>

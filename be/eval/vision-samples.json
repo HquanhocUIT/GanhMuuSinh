@@ -1,0 +1,36 @@
+[
+  {
+    "id": "bot-chien-market",
+    "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Botchien_in_Vietnam.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Botchien_in_Vietnam.jpg",
+    "expectedVendorId": "bot-chien",
+    "selectedVendorId": "bot-chien"
+  },
+  {
+    "id": "bot-chien-saigon",
+    "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Bột_chiên_tại_Sài_Gòn.JPG",
+    "source": "https://commons.wikimedia.org/wiki/File:Bột_chiên_tại_Sài_Gòn.JPG",
+    "expectedVendorId": "bot-chien",
+    "selectedVendorId": "bot-chien"
+  },
+  {
+    "id": "banh-khot-plate",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Bánh_khọt_(2020-3-28).jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Bánh_khọt_(2020-3-28).jpg",
+    "expectedVendorId": "banh-khot",
+    "selectedVendorId": "banh-khot"
+  },
+  {
+    "id": "banh-khot-second",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Bánh_khọt_by_Baoothersks.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Bánh_khọt_by_Baoothersks.jpg",
+    "expectedVendorId": "banh-khot",
+    "selectedVendorId": "banh-khot"
+  },
+  {
+    "id": "nonfood-river",
+    "path": "fe/public/images/river.jpg",
+    "expectedVendorId": null,
+    "selectedVendorId": "bot-chien"
+  }
+]

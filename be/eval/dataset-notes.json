@@ -1,0 +1,11 @@
+{
+  "dataset/banh_bong_lan/6.jpg": "Phần bánh bị sốt, chà bông và topping che gần hết. Thêm góc ngang hoặc ảnh cắt bánh để nhìn thấy ruột xốp; không suy ra bánh chỉ từ trứng muối.",
+  "dataset/banh_bong_lan/7.jpg": "Ảnh có dải đen và nhiều chai/hộp ở nền; các bánh nhỏ chưa lộ ruột. Nên dùng ảnh gốc chụp cận một bánh hoặc một miếng bánh đã cắt.",
+  "dataset/pha_lau/images (8).jpg": "Biến thể phá lấu xào mì khác xa phần lớn ảnh phá lấu nước. Cần thêm ảnh tham chiếu xào mì và cận phần lòng có nếp/tổ ong/ống rõ, thay vì gán nhãn dựa vào sợi mì.",
+  "dataset/pha_lau/images (5).jpg": "Lượt kiểm tra đặc điểm xác nhận có đồ ăn và nước dùng, nhưng chưa xác nhận được hình lòng/nếp/tổ ong đủ rõ. Cần góc chụp gần phần cái; không suy ra phá lấu chỉ từ màu nước dùng.",
+  "dataset/pha_lau/images (9).jpg": "Lượt kiểm tra đặc điểm xác nhận có đồ ăn, nhưng các khối sẫm màu trong nước dùng chưa đủ để phân biệt lòng với món hầm khác. Nên bổ sung ảnh phần cái ở góc sáng và gần hơn.",
+  "dataset/ca_phe/5.jpg": "Ly tối màu chụp ngoài trời khó phân biệt cà phê với trà đá/cola bằng một ảnh. Thêm ảnh quá trình pha hoặc góc nhìn rõ crema/lớp cà phê; hệ thống ưu tiên từ chối khi chưa chắc.",
+  "dataset/goi_kho_bo/6.jpg": "Ảnh 299×168 px dưới ngưỡng cạnh ngắn 224 px. Cần bản gốc lớn hơn; phóng to thumbnail không bổ sung chi tiết.",
+  "dataset/goi_kho_bo/7.jpg": "Ảnh 251×201 px dưới ngưỡng cạnh ngắn 224 px. Cần bản gốc lớn hơn; phóng to thumbnail không bổ sung chi tiết.",
+  "dataset/goi_kho_bo/9.jpg": "Ảnh 204×247 px dưới ngưỡng cạnh ngắn 224 px. Cần bản gốc lớn hơn; phóng to thumbnail không bổ sung chi tiết."
+}

@@ -1,0 +1,29 @@
+{
+  "name": "ganh-muu-sinh",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "fe",
+    "be"
+  ],
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "dev": "concurrently -k -n AI,API,WEB -c blue,green,yellow \"node be/scripts/ollama-local.js\" \"npm run dev -w be\" \"npm run dev -w fe\"",
+    "build": "npm run build -w fe",
+    "start": "npm run start -w be",
+    "ai:serve": "node be/scripts/ollama-local.js",
+    "test": "npm run test -w be",
+    "test:e2e": "playwright test",
+    "check": "npm run build && npm test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "admin:create": "node be/scripts/create-admin.js"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "concurrently": "^9.2.1",
+    "prettier": "^3.9.10"
+  }
+}
