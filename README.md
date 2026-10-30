@@ -23,7 +23,7 @@ npm run dev
 
 Repo có cấu hình Vercel cho Vite SPA và proxy `/api/*` sang backend.
 
-**Vercel (Frontend):** đặt Root Directory là thư mục gốc của repo. `vercel.json` đã đặt build command `npm run build`, output `fe/dist` và proxy API. Thêm biến `BACKEND_URL` bằng URL Render, không kèm `/api`.
+**Vercel (Frontend):** vì repo là monorepo, ở màn import hãy chọn **Import single project** tại mục `fe/`. Root Directory khi đó là `fe`; `fe/vercel.json` đặt build output là `dist` và proxy `/api/*` sang backend. Thêm biến `BACKEND_URL` bằng URL Render, không kèm `/api`.
 
 **Render (Backend API):** tạo **Web Service** từ cùng repo, đặt Root Directory là `be`, Build Command là `npm install` và Start Command là `npm start`. Backend Node.js không có bước biên dịch riêng. Đặt health check path `/api/health` và các biến `HOST=0.0.0.0`, `NODE_ENV=production`, `AI_PROVIDER=disabled` nếu chưa có AI cloud. Render cung cấp `PORT`.
 
