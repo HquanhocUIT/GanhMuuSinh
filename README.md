@@ -21,7 +21,11 @@ npm run dev
 
 ## Deploy Vercel + Render
 
-Repo có cấu hình Vercel cho Vite SPA và proxy `/api/*` sang backend. Tạo Render **Web Service** từ repo này với root directory để trống, build command `npm install && npm run build`, start command `npm start`, health check `/api/health`. Đặt các biến Render `HOST=0.0.0.0`, `NODE_ENV=production`, `AI_PROVIDER=disabled` nếu chưa có AI cloud. Render cung cấp `PORT` và biến `RENDER`; backend tự bind `0.0.0.0` trên Render.
+Repo có cấu hình Vercel cho Vite SPA và proxy `/api/*` sang backend.
+
+**Vercel (Frontend):** đặt Root Directory là thư mục gốc của repo. `vercel.json` đã đặt build command `npm run build`, output `fe/dist` và proxy API. Thêm biến `BACKEND_URL` bằng URL Render, không kèm `/api`.
+
+**Render (Backend API):** tạo **Web Service** từ cùng repo, đặt Root Directory là `be`, Build Command là `npm install` và Start Command là `npm start`. Backend Node.js không có bước biên dịch riêng. Đặt health check path `/api/health` và các biến `HOST=0.0.0.0`, `NODE_ENV=production`, `AI_PROVIDER=disabled` nếu chưa có AI cloud. Render cung cấp `PORT`.
 
 Sau khi có URL backend Render, đặt biến môi trường `BACKEND_URL` trong Vercel thành URL đó (ví dụ `https://ten-dich-vu.onrender.com`, không thêm `/api`). Sau khi Vercel cấp domain, đặt `ALLOWED_ORIGINS` trong Render thành origin Vercel chính xác (ví dụ `https://ten-du-an.vercel.app`, không có dấu `/` cuối), rồi deploy lại hai dịch vụ. Không đặt secret trong `VITE_*` hoặc commit vào GitHub.
 
