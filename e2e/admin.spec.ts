@@ -20,14 +20,14 @@ test('admin login, navigation and mobile layout', async ({ page }, info) => {
     scale: 'css',
   });
   await page.getByRole('link', { name: 'Nguồn tham khảo', exact: true }).click();
-  await expect(page.locator('.admin-reference-card')).toHaveCount(3);
+  await expect(page.locator('.admin-reference-card')).toHaveCount(130);
   await page.screenshot({
     path: `docs/screenshots/admin-sources-${info.project.name}.png`,
     fullPage: true,
     scale: 'css',
   });
   await page.reload();
-  await expect(page.locator('.admin-reference-card')).toHaveCount(3);
+  await expect(page.locator('.admin-reference-card')).toHaveCount(130);
 });
 
 test('reference draft stays private and editing has clear required publication fields', async ({
@@ -38,7 +38,9 @@ test('reference draft stays private and editing has clear required publication f
   const card = page.locator('.admin-reference-card').first();
   await card.getByRole('button').click();
   await expect(page.getByRole('dialog')).toBeVisible();
-  await expect(page.getByRole('textbox', { name: 'Tên gánh hàng' })).toHaveValue('Gánh chè cụ Mai');
+  await expect(page.getByRole('textbox', { name: 'Tên gánh hàng *', exact: true })).toHaveValue(
+    'Gánh chè cụ Mai',
+  );
   await expect(page.getByRole('spinbutton', { name: 'Giá tham khảo (đ)' })).toHaveValue('');
   await expect(page.getByRole('combobox', { name: 'Trạng thái', exact: true })).toHaveValue(
     'draft',
@@ -57,7 +59,7 @@ test('admin creates and edits a draft vendor, and creates a draft quest', async 
   await loginAdmin(page);
   await page.getByRole('button', { name: 'Thêm gánh hàng', exact: true }).click();
   const name = `Gánh thử UI ${info.project.name}`;
-  await page.getByRole('textbox', { name: 'Tên gánh hàng' }).fill(name);
+  await page.getByRole('textbox', { name: 'Tên gánh hàng *', exact: true }).fill(name);
   await page.getByRole('textbox', { name: 'Món / mặt hàng' }).fill('Bánh thử');
   await page.getByRole('button', { name: 'Lưu gánh hàng', exact: true }).click();
   await expect(page.getByRole('dialog')).toHaveCount(0);

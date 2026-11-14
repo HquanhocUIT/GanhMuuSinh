@@ -14,6 +14,7 @@ export interface AppState {
   preview: (quest: Quest) => void;
   start: (quest: Quest) => void;
   openWardRoute: (route: WardRoute) => void;
+  previewWardRoute: (route: WardRoute) => void;
   toggleSave: (id: string) => void;
   story: (vendor: Vendor) => void;
   toast: (text: string) => void;

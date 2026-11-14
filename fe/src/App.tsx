@@ -68,6 +68,7 @@ export default function App() {
   const [passport, setPassport] = useState<Passport>({ stamps: [], totalVendors: 12 });
   const [passportError, setPassportError] = useState('');
   const [selected, setSelected] = useState<Quest | null>(null);
+  const [selectedWard, setSelectedWard] = useState<WardRoute | null>(null);
   const [story, setStory] = useState<Vendor | null>(null);
   const [message, setMessage] = useState('');
   const [menu, setMenu] = useState(false);
@@ -180,6 +181,7 @@ export default function App() {
     writeStorage('gms-ward-route', route);
     setActive(null);
     writeStorage('gms-active', null);
+    setSelectedWard(null);
     window.location.hash = `ward-journey?ward=${encodeURIComponent(route.ward)}&route=${encodeURIComponent(route.id)}`;
   }, []);
   const toggleSave = (id: string) =>
@@ -333,6 +335,7 @@ export default function App() {
               preview: setSelected,
               start,
               openWardRoute,
+              previewWardRoute: setSelectedWard,
               toggleSave,
               story: setStory,
               toast: setMessage,
@@ -490,6 +493,77 @@ export default function App() {
             <button className="button primary full-width" onClick={() => start(selected)}>
               {t('Bắt đầu hành trình này', 'Start this journey')}
               <ArrowRight size={18} />
+            </button>
+          </div>
+        </Modal>
+      )}
+      {selectedWard && (
+        <Modal
+          title={t('Một hành trình nhỏ đang chờ', 'A little adventure awaits')}
+          onClose={() => setSelectedWard(null)}
+          wide
+        >
+          <div className="ward-preview-cover">
+            <img
+              src="/images/street.jpg"
+              alt={t(
+                'Chợ đường phố Việt Nam, ảnh minh họa',
+                'Vietnamese street market, illustrative photo',
+              )}
+            />
+            <span>
+              {t(
+                'Ảnh minh họa, không phải địa điểm trong tuyến',
+                'Illustrative photo, not a route stop',
+              )}
+            </span>
+          </div>
+          <div className="modal-body ward-preview">
+            <span className="eyebrow">
+              {selectedWard.ward} · {t('GHIM THAM KHẢO', 'REFERENCE PINS')}
+            </span>
+            <h3 className="display-small">{selectedWard.title}</h3>
+            <p className="muted">
+              {t(
+                'Đi lần lượt qua các ghim trong phường. Mỗi điểm có chỉ đường, Food X-Ray và dấu trải nghiệm trong hộ chiếu.',
+                'Visit the pins in order. Each stop has directions, Food X-Ray and a passport experience stamp.',
+              )}
+            </p>
+            <div className="journey-facts">
+              <span>
+                <Map size={17} />~{selectedWard.distance} km
+              </span>
+              <span>
+                {selectedWard.duration} {t('phút ước tính', 'estimated min')}
+              </span>
+              <strong>
+                {selectedWard.stops.length} {t('điểm dừng', 'stops')}
+              </strong>
+            </div>
+            <ol className="preview-stops">
+              {selectedWard.stops.map((stop, i) => (
+                <li key={stop.id}>
+                  <span className="stop-number">{i + 1}</span>
+                  <div>
+                    <strong>{stop.name}</strong>
+                    <small>
+                      {stop.dish} · {stop.ward}
+                    </small>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <p className="small-note">
+              {t(
+                'Ghim, giờ bán, giá và nguyên liệu chưa được xác minh. AI chỉ lưu dấu khi nhận diện được nhóm món hỗ trợ; dấu minh họa không phân tích ảnh. Cả hai không xác minh mua hàng hoặc vị trí.',
+                'Pins, opening hours, prices and ingredients are unverified. AI stamps require a supported dish match; demo stamps do not analyze photos. Neither verifies a purchase or location.',
+              )}
+            </p>
+            <button
+              className="button primary full-width"
+              onClick={() => openWardRoute(selectedWard)}
+            >
+              {t('Bắt đầu hành trình này', 'Start this journey')} <ArrowRight size={18} />
             </button>
           </div>
         </Modal>

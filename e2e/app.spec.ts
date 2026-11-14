@@ -92,27 +92,48 @@ test('custom planner honors exclusions and starts an active journey', async ({ p
   await expect(page.locator('.itinerary>li')).toHaveCount(4);
 });
 
-test('ward suggestion opens an ordered map route and survives refresh', async ({ page }) => {
+test('ward suggestion previews, starts, scans and stamps an ordered route', async ({ page }) => {
   await page.locator('.planner-ward-search input').fill('Phường Bến Thành');
   await page.getByRole('button', { name: 'Gợi ý cho mình' }).click();
   await expect(page.locator('.ward-route-card')).toHaveCount(3);
   await page
     .locator('.ward-route-card')
     .first()
-    .getByRole('button', { name: /Xem bản đồ và bắt đầu/ })
+    .getByRole('button', { name: /Xem trước hành trình/ })
     .click();
+  await expect(page.getByRole('dialog')).toContainText('Vòng 1 · Phường Bến Thành');
+  await page.getByRole('button', { name: 'Bắt đầu hành trình này' }).click();
 
   await expect(page).toHaveURL(/#ward-journey\?ward=.*&route=.*/);
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Phường Bến Thành');
   await expect(page.locator('.ward-itinerary > li')).toHaveCount(3);
   await expect(page.locator('.food-pin-ward')).toHaveCount(3);
+  await expect(page.locator('.journey-progress')).toContainText('0/3');
+  const routeUrl = page.url();
   await expect(page.getByRole('link', { name: /Chỉ đường đến điểm đầu/ })).toHaveAttribute(
     'href',
     /google\.com\/maps\/dir\/\?api=1&destination=/,
   );
+  const firstPinId = await page.evaluate(
+    () => JSON.parse(localStorage.getItem('gms-ward-route')!).stops[0].id,
+  );
+  await page
+    .locator('.ward-itinerary > li')
+    .first()
+    .getByRole('button', { name: /Food X-Ray/ })
+    .click();
+  await expect(page.locator('#tool-vendor')).toHaveValue(firstPinId);
+  await page.getByRole('button', { name: 'Thử trải nghiệm minh họa' }).click();
+  await expect(page.locator('.scan-success')).toBeVisible();
+  await page.getByRole('button', { name: 'Mở hộ chiếu' }).click();
+  await expect(page.locator('.reference-passport .badge-card')).toHaveCount(1);
+  await expect(page.locator('.reference-passport')).toContainText('Gánh chè cụ Mai');
+  await page.goto(routeUrl);
+  await expect(page.locator('.journey-progress')).toContainText('1/3');
 
   await page.reload();
   await expect(page.locator('.ward-itinerary > li')).toHaveCount(3);
+  await expect(page.locator('.journey-progress')).toContainText('1/3');
   await page.getByRole('button', { name: 'Chọn tuyến khác' }).click();
   await expect(page.locator('.ward-route-card')).toHaveCount(3);
 });
@@ -147,7 +168,7 @@ test('scan demo persists a clearly labeled passport stamp and story', async ({ p
     scale: 'css',
   });
   await page.getByRole('button', { name: 'Nghe chuyện của gánh' }).click();
-  await expect(page.getByRole('dialog')).toContainText('Câu chuyện hư cấu');
+  await expect(page.getByRole('dialog')).toContainText('dữ liệu minh họa');
   await page.getByRole('button', { name: 'Đóng / Close' }).click();
   await page.getByRole('button', { name: 'Mở hộ chiếu' }).click();
   await expect(page.locator('.badge-card.unlocked')).toHaveCount(1);

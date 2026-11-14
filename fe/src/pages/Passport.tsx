@@ -6,6 +6,7 @@ import { PassportStamp } from '../components/Brand';
 export default function PassportPage() {
   const { catalog, passport, passportError, refreshPassport, t, navigate, story } = useApp();
   const unique = new Set(passport.stamps.map((s) => s.vendorId));
+  const referenceStamps = catalog.mapCandidates.filter((pin) => unique.has(pin.id));
   const aiCount = passport.stamps.filter((s) => s.mode === 'ai-observed').length;
   return (
     <div className="container inner-page passport-page">
@@ -93,7 +94,7 @@ export default function PassportPage() {
           <h2>{t('Bộ sưu tập vị ngon', 'Your collection of flavors')}</h2>
         </div>
         <span className="muted">
-          {unique.size} / {catalog.vendors.length}
+          {unique.size} / {passport.totalVendors}
         </span>
       </div>
       <div className="badge-grid">
@@ -126,6 +127,54 @@ export default function PassportPage() {
           );
         })}
       </div>
+      {referenceStamps.length > 0 && (
+        <section
+          className="reference-passport"
+          aria-label={t('Dấu từ ghim tham khảo', 'Reference pin stamps')}
+        >
+          <div className="section-heading">
+            <div>
+              <span className="eyebrow">REFERENCE PIN MEMORIES</span>
+              <h2>{t('Dấu từ hành trình theo phường', 'Ward journey stamps')}</h2>
+            </div>
+            <span className="muted">
+              {referenceStamps.length} {t('ghim', 'pins')}
+            </span>
+          </div>
+          <div className="badge-grid">
+            {referenceStamps.map((pin, index) => {
+              const stamps = passport.stamps.filter((stamp) => stamp.vendorId === pin.id);
+              return (
+                <button
+                  className="badge-card unlocked"
+                  key={pin.id}
+                  onClick={() => {
+                    writeStorage('gms-scan-vendor', pin.id);
+                    navigate('scan');
+                  }}
+                >
+                  <PassportStamp index={index} />
+                  <h3>{pin.name}</h3>
+                  <p>
+                    {pin.dish} · {pin.ward}
+                  </p>
+                  <span className="badge-status">
+                    {stamps.some((stamp) => stamp.mode === 'ai-observed')
+                      ? t('AI nhận diện nhóm món', 'AI dish observation')
+                      : t('Dấu trải nghiệm minh họa', 'Demo experience stamp')}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+          <p className="small-note">
+            {t(
+              'Ghim tham khảo chưa xác minh người bán, nguyên liệu, giao dịch mua hoặc vị trí của bạn.',
+              'Reference pins do not verify the vendor, ingredients, purchase or your location.',
+            )}
+          </p>
+        </section>
+      )}
       <p className="small-note passport-note">
         {t(
           'Hộ chiếu được lưu theo trình duyệt bằng cookie ẩn danh. Dấu minh họa và dấu nhận diện AI đều chưa xác minh giao dịch mua hàng hoặc vị trí thực tế. Xóa cookie sẽ tạo hộ chiếu mới.',

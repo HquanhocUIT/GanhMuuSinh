@@ -26,7 +26,7 @@ export default function Tools({ mode }: { mode: 'voice' | 'scan' }) {
   const { catalog, active, t, navigate } = useApp();
   const stored = readStorage<string>('gms-scan-vendor', '');
   const [vendorId, setVendorId] = useState(() =>
-    catalog.vendors.some((v) => v.id === stored)
+    [...catalog.vendors, ...catalog.mapCandidates].some((v) => v.id === stored)
       ? stored
       : (active?.stops[0]?.id ?? catalog.vendors[0]?.id ?? ''),
   );
@@ -110,12 +110,21 @@ export default function Tools({ mode }: { mode: 'voice' | 'scan' }) {
                   ))}
               </optgroup>
             ))}
+            <optgroup label={t('Ghim tham khảo', 'Reference pins')}>
+              {catalog.mapCandidates.map((pin) => (
+                <option key={pin.id} value={pin.id}>
+                  {pin.name} · {pin.dish}
+                </option>
+              ))}
+            </optgroup>
           </select>
         </label>
         <span className="demo-label">
-          {catalog.vendors.find((v) => v.id === vendorId)?.dataType === 'illustrative'
-            ? t('Dữ liệu minh họa', 'Illustrative data')
-            : t('Danh mục cộng đồng', 'Community directory')}
+          {catalog.mapCandidates.some((pin) => pin.id === vendorId)
+            ? t('Ghim tham khảo', 'Reference pin')
+            : catalog.vendors.find((v) => v.id === vendorId)?.dataType === 'illustrative'
+              ? t('Dữ liệu minh họa', 'Illustrative data')
+              : t('Danh mục cộng đồng', 'Community directory')}
         </span>
       </div>
       {mode === 'voice' ? (
@@ -455,8 +464,8 @@ function Voice({ vendorId }: { vendorId: string }) {
 }
 
 function Scanner({ vendorId }: { vendorId: string }) {
-  const { catalog, t, toast, refreshPassport, navigate, story } = useApp();
-  const vendor = catalog.vendors.find((v) => v.id === vendorId)!;
+  const { catalog, wardRoute, t, toast, refreshPassport, navigate, story } = useApp();
+  const vendor = [...catalog.vendors, ...catalog.mapCandidates].find((v) => v.id === vendorId)!;
   const [image, setImage] = useState<{ url: string; base64: string; mimeType: string } | null>(
     null,
   );
@@ -658,7 +667,7 @@ function Scanner({ vendorId }: { vendorId: string }) {
           <p>
             {t(
               `Trải nghiệm minh họa với ${vendor.dish.toLocaleLowerCase('vi')}. Không phân tích ảnh, không xác thực mua hàng.`,
-              `Try a demo with ${vendor.dishEn}. No image analysis or purchase verification.`,
+              `Try a demo with ${'dishEn' in vendor ? vendor.dishEn : vendor.dish}. No image analysis or purchase verification.`,
             )}
           </p>
           <button
@@ -682,7 +691,12 @@ function Scanner({ vendorId }: { vendorId: string }) {
         {result?.matched && result.vendor ? (
           <>
             <div className="scan-success">
-              <PassportStamp index={catalog.vendors.findIndex((v) => v.id === vendorId)} />
+              <PassportStamp
+                index={Math.max(
+                  0,
+                  catalog.vendors.findIndex((v) => v.id === vendorId),
+                )}
+              />
               <span className="status-tag">
                 {result.mode === 'demo'
                   ? t('DẤU MINH HỌA', 'DEMO STAMP')
@@ -741,17 +755,47 @@ function Scanner({ vendorId }: { vendorId: string }) {
                 )}
               </p>
               <h3>{t('Ăn sao cho đúng điệu?', 'Enjoy it the local way')}</h3>
-              <p>{result.vendor.tip}</p>
+              <p>
+                {result.vendor.tip ||
+                  t(
+                    'Chưa có hướng dẫn đã xác minh cho ghim này.',
+                    'No verified serving guide for this pin yet.',
+                  )}
+              </p>
             </div>
             <div className="scan-result-actions">
-              <button className="button primary" onClick={() => story(result.vendor!)}>
-                <Volume2 size={17} />
-                {t('Nghe chuyện của gánh', 'Hear the vendor’s story')}
-              </button>
+              {result.vendor.story ? (
+                <button className="button primary" onClick={() => story(result.vendor!)}>
+                  <Volume2 size={17} />
+                  {t('Nghe chuyện của gánh', 'Hear the vendor’s story')}
+                </button>
+              ) : result.vendor.sourceUrl ? (
+                <a
+                  className="button secondary"
+                  href={result.vendor.sourceUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {t('Xem ghim nguồn', 'Open source pin')} <ArrowRight size={16} />
+                </a>
+              ) : null}
               <button className="button secondary" onClick={() => navigate('passport')}>
                 {t('Mở hộ chiếu', 'Open passport')}
                 <ArrowRight size={16} />
               </button>
+              {wardRoute && wardRoute.stops.some((stop) => stop.id === vendorId) && (
+                <button
+                  className="button secondary"
+                  onClick={() =>
+                    navigate(
+                      `ward-journey?ward=${encodeURIComponent(wardRoute.ward)}&route=${encodeURIComponent(wardRoute.id)}`,
+                    )
+                  }
+                >
+                  {t('Về hành trình', 'Back to journey')}
+                  <ArrowRight size={16} />
+                </button>
+              )}
             </div>
             <p className="small-note">{result.message}</p>
           </>

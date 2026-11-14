@@ -2,6 +2,8 @@ import { lazy, Suspense, useEffect, useState } from 'react';
 import {
   ArrowLeft,
   ArrowRight,
+  Camera,
+  Check,
   Clock3,
   ExternalLink,
   Footprints,
@@ -10,6 +12,7 @@ import {
 } from 'lucide-react';
 import { useApp } from '../context';
 import { api } from '../lib/api';
+import { writeStorage } from '../lib/api';
 import type { MapCandidate, Vendor, WardRoute } from '../types';
 
 const FoodMap = lazy(() => import('../components/FoodMap'));
@@ -25,7 +28,7 @@ function directionsTo(stop: MapCandidate) {
 }
 
 export default function WardJourney() {
-  const { wardRoute, openWardRoute, navigate, t } = useApp();
+  const { wardRoute, openWardRoute, passport, navigate, t } = useApp();
   const [hash, setHash] = useState(window.location.hash);
   const [loadedRoute, setLoadedRoute] = useState<WardRoute | null>(null);
   const [error, setError] = useState('');
@@ -107,6 +110,13 @@ export default function WardJourney() {
     );
 
   const firstStop = route.stops[0];
+  const completed = route.stops.filter((stop) =>
+    passport.stamps.some((stamp) => stamp.vendorId === stop.id),
+  );
+  const scanStop = (id: string) => {
+    writeStorage('gms-scan-vendor', id);
+    navigate('scan');
+  };
   return (
     <div className="container inner-page ward-journey-page">
       <button
@@ -127,7 +137,13 @@ export default function WardJourney() {
             )}
           </p>
         </div>
-        <span className="reference-badge">{t('Dữ liệu tham khảo', 'Reference data')}</span>
+        <div className="journey-progress">
+          <strong>
+            {completed.length}
+            <span>/{route.stops.length}</span>
+          </strong>
+          <span>{t('điểm có dấu trải nghiệm', 'stops with a stamp')}</span>
+        </div>
       </div>
       <div className="ward-journey-summary">
         <span>
@@ -161,7 +177,15 @@ export default function WardJourney() {
           <ol className="itinerary ward-itinerary">
             {route.stops.map((stop, index) => (
               <li key={stop.id}>
-                <span className="stop-number ward-stop-number">{index + 1}</span>
+                <span
+                  className={`stop-number ward-stop-number ${passport.stamps.some((stamp) => stamp.vendorId === stop.id) ? 'done' : ''}`}
+                >
+                  {passport.stamps.some((stamp) => stamp.vendorId === stop.id) ? (
+                    <Check size={16} />
+                  ) : (
+                    index + 1
+                  )}
+                </span>
                 <div className="itinerary-content">
                   <div className="itinerary-topline">
                     <span>
@@ -169,6 +193,9 @@ export default function WardJourney() {
                         ? t('Bắt đầu ở đây', 'Start here')
                         : t(`Điểm ${index + 1}`, `Stop ${index + 1}`)}
                     </span>
+                    {passport.stamps.some((stamp) => stamp.vendorId === stop.id) && (
+                      <span className="status-tag">{t('Đã lưu dấu', 'Stamped')}</span>
+                    )}
                   </div>
                   <h3>{stop.name}</h3>
                   <p>{stop.dish}</p>
@@ -177,6 +204,9 @@ export default function WardJourney() {
                     {stop.area || stop.ward || route.ward}
                   </small>
                   <div className="ward-stop-actions">
+                    <button onClick={() => scanStop(stop.id)}>
+                      <Camera size={14} /> {t('Food X-Ray · Lưu dấu', 'Food X-Ray · Stamp')}
+                    </button>
                     <a href={directionsTo(stop)} target="_blank" rel="noopener noreferrer">
                       {t('Chỉ đường', 'Directions')} <ArrowRight size={14} />
                     </a>
@@ -214,6 +244,9 @@ export default function WardJourney() {
           'Hours, prices and availability of reference pins are unverified. Distance and time are estimates; check the source pin or ask the vendor before visiting.',
         )}
       </p>
+      <button className="button secondary ward-passport-link" onClick={() => navigate('passport')}>
+        {t('Mở hộ chiếu ẩm thực', 'Open food passport')} <ArrowRight size={16} />
+      </button>
     </div>
   );
 }

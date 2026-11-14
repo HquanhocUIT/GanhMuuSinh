@@ -30,7 +30,7 @@ export default function Discovery({
   search: string;
   onSearch: (value: string) => void;
 }) {
-  const { catalog, t, saved, toggleSave, preview, navigate, story, openWardRoute } = useApp();
+  const { catalog, t, saved, toggleSave, preview, navigate, story, previewWardRoute } = useApp();
   const [region, setRegion] = useState('all');
   const [time, setTime] = useState('all');
   const [budget, setBudget] = useState(150000);
@@ -546,14 +546,14 @@ export default function Discovery({
                   <button
                     type="button"
                     className="button primary ward-route-start"
-                    onClick={() => openWardRoute(route)}
+                    onClick={() => previewWardRoute(route)}
                     aria-label={t(
-                      `Xem bản đồ và bắt đầu ${route.title}`,
-                      `Open map and start ${route.title}`,
+                      `Xem trước hành trình ${route.title}`,
+                      `Preview journey ${route.title}`,
                     )}
                   >
                     <MapPin size={16} />
-                    {t('Xem bản đồ & bắt đầu', 'Open map & start')}
+                    {t('Xem trước hành trình', 'Preview journey')}
                     <ArrowRight size={16} />
                   </button>
                 </article>

@@ -179,6 +179,85 @@ test('anonymous passport persists demo stamps, is idempotent, and isolates brows
     );
   }));
 
+test('ward reference pins receive their own clearly unverified passport stamps', async () =>
+  withAPI(async (request) => {
+    const route = await request('/planner/ward', { ward: 'Phường Bến Thành' });
+    assert.equal(route.status, 200);
+    const pin = route.data.routes[0].stops[0];
+    const passport = await request('/passport');
+    const stamp = await request('/scans', { mode: 'demo', vendorId: pin.id }, passport.cookie);
+    assert.equal(stamp.status, 200);
+    assert.equal(stamp.data.vendor.id, pin.id);
+    assert.equal(stamp.data.vendor.name, pin.name);
+    assert.equal(stamp.data.vendor.allergensKnown, false);
+    assert.deepEqual(stamp.data.vendor.ingredients, []);
+    assert.equal(stamp.data.purchaseVerified, false);
+    const saved = await request('/passport', undefined, passport.cookie);
+    assert.equal(saved.data.stamps[0].vendorId, pin.id);
+    assert.equal(saved.data.stamps[0].vendor.dataType, 'reference');
+    assert.equal(
+      (await request('/scans', { mode: 'demo', vendorId: pin.id }, passport.cookie)).data.newStamp,
+      false,
+    );
+    assert.equal(
+      (await request('/scans', { mode: 'demo', vendorId: 'reference-invalid' })).status,
+      404,
+    );
+  }));
+
+test('AI stamps a reference stop only when the observed dish matches that stop', async () => {
+  const image = {
+    mimeType: 'image/png',
+    base64: (
+      await sharp({ create: { width: 256, height: 256, channels: 3, background: 'white' } })
+        .png()
+        .toBuffer()
+    ).toString('base64'),
+  };
+  let matched = false;
+  const ai = {
+    configured: true,
+    provider: 'test',
+    model: 'test',
+    visionPipeline: 'test',
+    referenceConfigured: false,
+    async scan(_image, candidates, expectedId) {
+      assert.ok(candidates.some((candidate) => candidate.id === expectedId));
+      return {
+        status: 'recognized',
+        matchedVendorId: matched ? expectedId : 'bot-chien',
+        dishName: matched ? 'Bánh mì' : 'Bột chiên',
+        confidence: 0.93,
+        explanation: 'Kết quả thử nghiệm.',
+      };
+    },
+  };
+  await withAPI(async (request) => {
+    const route = await request('/planner/ward', { ward: 'Phường Bến Thành' });
+    const pin = route.data.routes
+      .flatMap((item) => item.stops)
+      .find((item) => item.dish === 'bánh mì');
+    assert.ok(pin);
+    const passport = await request('/passport');
+    const wrong = await request('/scans', { mode: 'ai', vendorId: pin.id, image }, passport.cookie);
+    assert.equal(wrong.data.matched, false);
+    assert.equal((await request('/passport', undefined, passport.cookie)).data.stamps.length, 0);
+    matched = true;
+    const correct = await request(
+      '/scans',
+      { mode: 'ai', vendorId: pin.id, image },
+      passport.cookie,
+    );
+    assert.equal(correct.data.mode, 'ai-observed');
+    assert.equal(correct.data.vendor.id, pin.id);
+    assert.equal(correct.data.purchaseVerified, false);
+    assert.equal(
+      (await request('/passport', undefined, passport.cookie)).data.stamps[0].vendorId,
+      pin.id,
+    );
+  }, ai);
+});
+
 test('phrasebook works without API keys and unknown text fails honestly', async () =>
   withAPI(async (request) => {
     const result = await request('/translate', { text: 'Hết bò khô rồi, lấy thêm trứng cút nha?' });

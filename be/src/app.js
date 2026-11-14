@@ -134,8 +134,32 @@ export function createApp({ db, ai, frontendPath }) {
     const v = historical
       ? store.get('vendor', id)
       : store.publishedVendors().find((v) => v.id === id);
-    if (!v) throw new ServiceError(404, 'Không tìm thấy gánh hàng.');
-    return v;
+    if (v) return v;
+    const pin = store.referenceCandidates().find((candidate) => candidate.id === id);
+    if (!pin) throw new ServiceError(404, 'Không tìm thấy gánh hàng.');
+    // A public map pin is a visit target, not a verified vendor listing.
+    return {
+      ...pin,
+      owner: '',
+      dishEn: pin.dish,
+      address: pin.area || pin.ward,
+      price: 0,
+      hours: [0, 24],
+      years: 0,
+      ingredients: [],
+      ingredientsEn: [],
+      allergens: [],
+      allergensKnown: false,
+      tip: '',
+      tipEn: '',
+      story: '',
+      storyEn: '',
+      badge: 'Dấu khám phá tham khảo',
+      image: '/images/street.jpg',
+      dataType: 'reference',
+      sourceUrl: pin.mapUrl || pin.sourceUrl,
+      verification: 'unverified',
+    };
   };
 
   app.get('/api/health', (_req, res) =>
@@ -226,7 +250,10 @@ export function createApp({ db, ai, frontendPath }) {
         vendor: findVendor(s.vendorId, true),
         purchaseVerified: false,
       })),
-      totalVendors: store.publishedVendors().length,
+      totalVendors: new Set([
+        ...store.publishedVendors().map((vendor) => vendor.id),
+        ...store.referenceCandidates().map((pin) => pin.id),
+      ]).size,
     });
   });
   app.post('/api/scans', session, aiLimit, async (req, res) => {
@@ -237,7 +264,11 @@ export function createApp({ db, ai, frontendPath }) {
     if (input.mode === 'ai') {
       if (!validImage(input.image))
         throw new ServiceError(400, 'Ảnh không hợp lệ. Chọn JPEG, PNG hoặc WebP tối đa 5 MB.');
-      observation = await ai.scan(input.image, store.publishedVendors(), expected.id);
+      observation = await ai.scan(
+        input.image,
+        [...store.publishedVendors(), expected],
+        expected.id,
+      );
       if (observation.matchedVendorId !== expected.id || observation.confidence < 0.8) {
         const differentDish =
           observation.status === 'recognized' && observation.matchedVendorId !== expected.id;
