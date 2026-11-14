@@ -944,6 +944,17 @@ main:focus {
   font-size: 8px;
   line-height: 1.5;
 }
+.ward-route-start {
+  width: 100%;
+  min-height: 44px;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+  font-size: 11px;
+}
+.ward-route-start svg:last-child {
+  margin-left: auto;
+}
 @media (max-width: 960px) {
   .ward-route-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2168,6 +2179,102 @@ main:focus {
 }
 .map-candidate-source:hover {
   text-decoration: underline;
+}
+.ward-journey-page .page-heading {
+  align-items: flex-start;
+}
+.ward-journey-page .page-heading > .reference-badge {
+  margin-top: 5px;
+}
+.ward-journey-summary {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  padding: 15px 20px;
+  margin-bottom: 24px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: white;
+}
+.ward-journey-summary > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+.ward-journey-summary > span svg {
+  color: #718468;
+}
+.ward-directions {
+  min-height: 44px;
+  margin-left: auto;
+  font-size: 11px;
+}
+.ward-stop-number {
+  border-color: #e5caaa;
+  background: #fbf0df;
+  color: #885329;
+}
+.ward-itinerary .itinerary-content h3 {
+  font-size: 13px;
+}
+.ward-itinerary .itinerary-content > p {
+  font-size: 12px;
+}
+.ward-stop-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.ward-stop-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 600;
+}
+.ward-stop-actions a:hover {
+  border-color: #bfd1b8;
+  background: var(--green-soft);
+}
+.food-pin-ward span {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #a95b2e;
+  transform: none;
+  font-size: 13px;
+}
+@media (max-width: 700px) {
+  .ward-journey-page .page-heading {
+    gap: 10px;
+  }
+  .ward-journey-page .page-heading > .reference-badge {
+    align-self: flex-start;
+  }
+  .ward-journey-summary {
+    gap: 13px;
+    padding: 15px;
+  }
+  .ward-journey-summary > span {
+    font-size: 11px;
+  }
+  .ward-directions {
+    width: 100%;
+    margin-left: 0;
+  }
+  .ward-stop-actions a {
+    flex: 1 1 auto;
+    font-size: 11px;
+  }
 }
 .leaflet-popup-content {
   font-family: 'Be Vietnam Pro';

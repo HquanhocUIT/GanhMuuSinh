@@ -19,13 +19,14 @@ import {
 import { useAuth } from './auth';
 import { api, money, readStorage, writeStorage } from './lib/api';
 import { speak } from './lib/speech';
-import type { Catalog, Passport, Quest, Vendor } from './types';
+import type { Catalog, Passport, Quest, Vendor, WardRoute } from './types';
 import { AppContext } from './context';
 import { BrandMark } from './components/Brand';
 import { Modal } from './components/Modal';
 import Discovery from './pages/Discovery';
 
 const Journey = lazy(() => import('./pages/Journey'));
+const WardJourney = lazy(() => import('./pages/WardJourney'));
 const Tools = lazy(() => import('./pages/Tools'));
 const PassportPage = lazy(() => import('./pages/Passport'));
 const Stories = lazy(() => import('./pages/Stories'));
@@ -54,6 +55,16 @@ export default function App() {
       ? value
       : null;
   });
+  const [wardRoute, setWardRoute] = useState<WardRoute | null>(() => {
+    const value = readStorage<WardRoute | null>('gms-ward-route', null);
+    return value &&
+      typeof value.id === 'string' &&
+      typeof value.ward === 'string' &&
+      Array.isArray(value.stops) &&
+      value.stops.length > 0
+      ? value
+      : null;
+  });
   const [passport, setPassport] = useState<Passport>({ stamps: [], totalVendors: 12 });
   const [passportError, setPassportError] = useState('');
   const [selected, setSelected] = useState<Quest | null>(null);
@@ -64,11 +75,7 @@ export default function App() {
   const [search, setSearch] = useState('');
   const t = (vi: string, en: string) => (lang === 'vi' ? vi : en);
   const storyText = story ? (lang === 'en' ? story.storyEn || '' : story.story) : '';
-  const storyAudioUrl = story
-    ? lang === 'en'
-      ? story.storyAudioUrlEn
-      : story.storyAudioUrl
-    : '';
+  const storyAudioUrl = story ? (lang === 'en' ? story.storyAudioUrlEn : story.storyAudioUrl) : '';
   const storyTitle = story
     ? lang === 'en'
       ? story.nameEn || story.dishEn || 'Street food stall'
@@ -122,6 +129,16 @@ export default function App() {
     }
   }, [catalog, active]);
   useEffect(() => {
+    if (
+      catalog &&
+      wardRoute &&
+      wardRoute.stops.some((stop) => !catalog.mapCandidates.some((pin) => pin.id === stop.id))
+    ) {
+      setWardRoute(null);
+      writeStorage('gms-ward-route', null);
+    }
+  }, [catalog, wardRoute]);
+  useEffect(() => {
     const onHash = () => {
       setPage(currentPage());
       setMenu(false);
@@ -152,10 +169,19 @@ export default function App() {
   const start = (quest: Quest) => {
     setActive(quest);
     writeStorage('gms-active', quest);
+    setWardRoute(null);
+    writeStorage('gms-ward-route', null);
     setSelected(null);
     navigate('journey');
     setMessage(t('Hành trình đã sẵn sàng. Mình đi thôi!', 'Your journey is ready. Let’s go!'));
   };
+  const openWardRoute = useCallback((route: WardRoute) => {
+    setWardRoute(route);
+    writeStorage('gms-ward-route', route);
+    setActive(null);
+    writeStorage('gms-active', null);
+    window.location.hash = `ward-journey?ward=${encodeURIComponent(route.ward)}&route=${encodeURIComponent(route.id)}`;
+  }, []);
   const toggleSave = (id: string) =>
     setSaved((previous) => {
       const next = previous.includes(id) ? previous.filter((x) => x !== id) : [...previous, id];
@@ -168,7 +194,7 @@ export default function App() {
     { id: 'stories', label: t('Chuyện của gánh', 'Our stories'), icon: BookOpen },
     { id: 'passport', label: t('Hộ chiếu ẩm thực', 'Food passport'), icon: BookOpen },
   ];
-  const activeNav = ['journey', 'saved'].includes(page) ? 'discover' : page;
+  const activeNav = ['journey', 'ward-journey', 'saved'].includes(page) ? 'discover' : page;
   return (
     <>
       <a
@@ -301,10 +327,12 @@ export default function App() {
               lang,
               t,
               active,
+              wardRoute,
               saved,
               navigate,
               preview: setSelected,
               start,
+              openWardRoute,
               toggleSave,
               story: setStory,
               toast: setMessage,
@@ -322,6 +350,8 @@ export default function App() {
                 <Discovery savedOnly={page === 'saved'} search={search} onSearch={setSearch} />
               ) : page === 'journey' || page === 'map' ? (
                 <Journey mapOnly={page === 'map'} />
+              ) : page === 'ward-journey' ? (
+                <WardJourney />
               ) : page === 'voice' || page === 'scan' ? (
                 <Tools mode={page} />
               ) : page === 'passport' ? (
@@ -379,8 +409,17 @@ export default function App() {
           </a>
         </div>
       </footer>
-      {active && !['journey', 'scan', 'voice'].includes(page) && (
-        <button className="active-journey-pill" onClick={() => navigate('journey')}>
+      {(active || wardRoute) && !['journey', 'ward-journey', 'scan', 'voice'].includes(page) && (
+        <button
+          className="active-journey-pill"
+          onClick={() =>
+            navigate(
+              wardRoute
+                ? `ward-journey?ward=${encodeURIComponent(wardRoute.ward)}&route=${encodeURIComponent(wardRoute.id)}`
+                : 'journey',
+            )
+          }
+        >
           <Route size={18} />
           <span>{t('Tiếp tục hành trình', 'Continue journey')}</span>
           <ArrowRight size={16} />
@@ -456,7 +495,7 @@ export default function App() {
         </Modal>
       )}
       {story && (
-          <Modal title={storyTitle} onClose={() => setStory(null)}>
+        <Modal title={storyTitle} onClose={() => setStory(null)}>
           <div className="modal-body story-body">
             <span className="eyebrow">
               <Heart size={14} /> {t('MÓN ĂN & CÂU CHUYỆN', 'FOOD AND STORIES')}
@@ -493,7 +532,10 @@ export default function App() {
                 controls
                 preload="metadata"
                 src={storyAudioUrl}
-                aria-label={t(`Nghe lời kể về ${story.dish}`, `Listen to ${story.dishEn || story.dish}`)}
+                aria-label={t(
+                  `Nghe lời kể về ${story.dish}`,
+                  `Listen to ${story.dishEn || story.dish}`,
+                )}
               />
             ) : (
               <>

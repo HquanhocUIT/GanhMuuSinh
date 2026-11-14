@@ -92,6 +92,31 @@ test('custom planner honors exclusions and starts an active journey', async ({ p
   await expect(page.locator('.itinerary>li')).toHaveCount(4);
 });
 
+test('ward suggestion opens an ordered map route and survives refresh', async ({ page }) => {
+  await page.locator('.planner-ward-search input').fill('Phường Bến Thành');
+  await page.getByRole('button', { name: 'Gợi ý cho mình' }).click();
+  await expect(page.locator('.ward-route-card')).toHaveCount(3);
+  await page
+    .locator('.ward-route-card')
+    .first()
+    .getByRole('button', { name: /Xem bản đồ và bắt đầu/ })
+    .click();
+
+  await expect(page).toHaveURL(/#ward-journey\?ward=.*&route=.*/);
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('Phường Bến Thành');
+  await expect(page.locator('.ward-itinerary > li')).toHaveCount(3);
+  await expect(page.locator('.food-pin-ward')).toHaveCount(3);
+  await expect(page.getByRole('link', { name: /Chỉ đường đến điểm đầu/ })).toHaveAttribute(
+    'href',
+    /google\.com\/maps\/dir\/\?api=1&destination=/,
+  );
+
+  await page.reload();
+  await expect(page.locator('.ward-itinerary > li')).toHaveCount(3);
+  await page.getByRole('button', { name: 'Chọn tuyến khác' }).click();
+  await expect(page.locator('.ward-route-card')).toHaveCount(3);
+});
+
 test('voice options compose a real order and phrasebook translates without AI', async ({
   page,
 }) => {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   ArrowRight,
   AudioLines,
@@ -19,18 +19,7 @@ import {
 } from 'lucide-react';
 import { useApp } from '../context';
 import { api, money } from '../lib/api';
-import type { MapCandidate, Quest, RegionId, TimeSlot } from '../types';
-
-interface WardRoute {
-  id: string;
-  title: string;
-  ward: string;
-  stops: MapCandidate[];
-  stopCount: number;
-  distance: number;
-  duration: number;
-  label: string;
-}
+import type { Quest, RegionId, TimeSlot, WardRoute } from '../types';
 
 export default function Discovery({
   savedOnly,
@@ -41,7 +30,7 @@ export default function Discovery({
   search: string;
   onSearch: (value: string) => void;
 }) {
-  const { catalog, t, saved, toggleSave, preview, navigate, story } = useApp();
+  const { catalog, t, saved, toggleSave, preview, navigate, story, openWardRoute } = useApp();
   const [region, setRegion] = useState('all');
   const [time, setTime] = useState('all');
   const [budget, setBudget] = useState(150000);
@@ -49,9 +38,31 @@ export default function Discovery({
   const [advanced, setAdvanced] = useState(false);
   const [all, setAll] = useState(false);
   const [planning, setPlanning] = useState(false);
-  const [ward, setWard] = useState('');
+  const [ward, setWard] = useState(
+    () => new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('ward') ?? '',
+  );
   const [wardRoutes, setWardRoutes] = useState<WardRoute[]>([]);
   const [error, setError] = useState('');
+  useEffect(() => {
+    const selectedWard = new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('ward');
+    if (!selectedWard) return;
+    let cancelled = false;
+    api<{ routes: WardRoute[] }>('/planner/ward', { ward: selectedWard })
+      .then(({ routes }) => {
+        if (cancelled) return;
+        setWardRoutes(routes);
+        setAll(true);
+        requestAnimationFrame(() =>
+          document.getElementById('ward-routes-title')?.scrollIntoView({ block: 'start' }),
+        );
+      })
+      .catch((cause: Error) => {
+        if (!cancelled) setError(cause.message);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
   const normalize = (text: string) =>
     text
       .normalize('NFD')
@@ -396,14 +407,21 @@ export default function Discovery({
                   setWard(e.target.value);
                   setWardRoutes([]);
                 }}
-                placeholder={t('Nhập tên phường, ví dụ: Phường Bến Thành', 'Enter a ward, e.g. Ben Thanh Ward')}
+                placeholder={t(
+                  'Nhập tên phường, ví dụ: Phường Bến Thành',
+                  'Enter a ward, e.g. Ben Thanh Ward',
+                )}
                 aria-label={t('Nhập phường muốn khám phá', 'Enter the ward you want to explore')}
               />
               <datalist id="available-wards">
-                {catalog.wards.map((name) => <option key={name} value={name} />)}
+                {catalog.wards.map((name) => (
+                  <option key={name} value={name} />
+                ))}
               </datalist>
             </span>
-            <span className="planner-ward-hint">{t('52 phường hiện có ghim tham khảo', 'Reference pins in 52 wards')}</span>
+            <span className="planner-ward-hint">
+              {t('52 phường hiện có ghim tham khảo', 'Reference pins in 52 wards')}
+            </span>
           </label>
           <div className="planner-bottom">
             <button
@@ -469,12 +487,25 @@ export default function Discovery({
           )}
         </div>
         {wardRoutes.length > 0 && (
-          <section className="ward-route-results" aria-live="polite" aria-labelledby="ward-routes-title">
+          <section
+            className="ward-route-results"
+            aria-live="polite"
+            aria-labelledby="ward-routes-title"
+          >
             <div className="ward-route-heading">
               <div>
-                <span className="eyebrow">{t('ĐI MỘT VÒNG, THỬ NHIỀU VỊ', 'A FEW LITTLE LOOPS')}</span>
-                <h3 id="ward-routes-title">{t(`Gợi ý quanh ${wardRoutes[0].ward}`, `Explore ${wardRoutes[0].ward}`)}</h3>
-                <p>{t(`${wardRoutes.length} tuyến được chia từ các ghim khác nhau để hạn chế lặp điểm.`, `${wardRoutes.length} routes use separate pins to reduce repetition.`)}</p>
+                <span className="eyebrow">
+                  {t('ĐI MỘT VÒNG, THỬ NHIỀU VỊ', 'A FEW LITTLE LOOPS')}
+                </span>
+                <h3 id="ward-routes-title">
+                  {t(`Gợi ý quanh ${wardRoutes[0].ward}`, `Explore ${wardRoutes[0].ward}`)}
+                </h3>
+                <p>
+                  {t(
+                    `${wardRoutes.length} tuyến được chia từ các ghim khác nhau để hạn chế lặp điểm.`,
+                    `${wardRoutes.length} routes use separate pins to reduce repetition.`,
+                  )}
+                </p>
               </div>
               <span className="reference-badge">{t('Dữ liệu tham khảo', 'Reference data')}</span>
             </div>
@@ -483,18 +514,48 @@ export default function Discovery({
                 <article className="ward-route-card" key={route.id}>
                   <div className="ward-route-card-top">
                     <span className="ward-route-number">{String(index + 1).padStart(2, '0')}</span>
-                    <span>{route.stopCount} {t('điểm', 'stops')} · ~{route.distance} km</span>
+                    <span>
+                      {route.stopCount} {t('điểm', 'stops')} · ~{route.distance} km
+                    </span>
                   </div>
                   <h4>{route.title}</h4>
                   <ol>
                     {route.stops.map((stop) => (
                       <li key={stop.id}>
-                        <span><strong>{stop.dish}</strong><small>{stop.name}</small></span>
-                        <a href={stop.mapUrl} target="_blank" rel="noreferrer" aria-label={`${t('Mở bản đồ', 'Open map')}: ${stop.name}`}><ArrowRight size={15} /></a>
+                        <span>
+                          <strong>{stop.dish}</strong>
+                          <small>{stop.name}</small>
+                        </span>
+                        <a
+                          href={stop.mapUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          aria-label={`${t('Mở bản đồ', 'Open map')}: ${stop.name}`}
+                        >
+                          <ArrowRight size={15} />
+                        </a>
                       </li>
                     ))}
                   </ol>
-                  <p className="ward-route-note">{t('Khoảng cách chỉ ước tính theo tọa độ. Chưa xác minh giờ bán, giá và tình trạng còn bán; hãy mở bản đồ để kiểm tra từng điểm trước khi đi.', 'Distance is estimated from coordinates. Hours, prices and current availability are unverified; open each map pin and confirm before visiting.')}</p>
+                  <p className="ward-route-note">
+                    {t(
+                      'Khoảng cách chỉ ước tính theo tọa độ. Chưa xác minh giờ bán, giá và tình trạng còn bán; hãy mở bản đồ để kiểm tra từng điểm trước khi đi.',
+                      'Distance is estimated from coordinates. Hours, prices and current availability are unverified; open each map pin and confirm before visiting.',
+                    )}
+                  </p>
+                  <button
+                    type="button"
+                    className="button primary ward-route-start"
+                    onClick={() => openWardRoute(route)}
+                    aria-label={t(
+                      `Xem bản đồ và bắt đầu ${route.title}`,
+                      `Open map and start ${route.title}`,
+                    )}
+                  >
+                    <MapPin size={16} />
+                    {t('Xem bản đồ & bắt đầu', 'Open map & start')}
+                    <ArrowRight size={16} />
+                  </button>
                 </article>
               ))}
             </div>

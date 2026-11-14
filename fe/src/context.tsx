@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import type { Catalog, Passport, Quest, Vendor } from './types';
+import type { Catalog, Passport, Quest, Vendor, WardRoute } from './types';
 
 export interface AppState {
   catalog: Catalog;
@@ -8,10 +8,12 @@ export interface AppState {
   lang: 'vi' | 'en';
   t: (vi: string, en: string) => string;
   active: Quest | null;
+  wardRoute: WardRoute | null;
   saved: string[];
   navigate: (page: string) => void;
   preview: (quest: Quest) => void;
   start: (quest: Quest) => void;
+  openWardRoute: (route: WardRoute) => void;
   toggleSave: (id: string) => void;
   story: (vendor: Vendor) => void;
   toast: (text: string) => void;

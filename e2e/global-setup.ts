@@ -1,26 +1,50 @@
+import { fork } from 'node:child_process';
 import { once } from 'node:events';
 import { resolve } from 'node:path';
-import { createApp } from '../be/src/app.js';
-import { openDatabase } from '../be/src/db.js';
-import { createAI } from '../be/src/services/ai.js';
-import { createAccount } from '../be/src/services/auth.js';
 
 export default async function setup() {
-  const db = openDatabase(':memory:');
-  // This account exists only in the isolated in-memory E2E database.
-  await createAccount(
-    db,
-    { email: 'admin@e2e.test', name: 'Biên tập viên', password: 'E2E-only-password-2026' },
-    'admin',
-  );
-  const app = createApp({ db, ai: createAI({}), frontendPath: resolve('fe/dist') });
-  const server = app.listen(4173, '127.0.0.1');
-  await once(server, 'listening');
+  // A separate Node process loads the ESM backend without Playwright's TS
+  // transform, which cannot evaluate the backend's import.meta URL assets.
+  const server = fork(resolve('e2e/server.mjs'), [], {
+    stdio: ['ignore', 'pipe', 'pipe', 'ipc'],
+  });
+  let output = '';
+  server.stdout?.on('data', (chunk) => {
+    output += chunk.toString();
+  });
+  server.stderr?.on('data', (chunk) => {
+    output += chunk.toString();
+  });
+  try {
+    await Promise.race([
+      new Promise<void>((done) =>
+        server.on('message', (message) => {
+          if (message === 'ready') done();
+        }),
+      ),
+      once(server, 'exit').then(([code]) => {
+        throw new Error(`E2E backend exited with ${code}: ${output}`);
+      }),
+      new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error(`E2E backend did not start: ${output}`)), 15000),
+      ),
+    ]);
+  } catch (error) {
+    server.kill();
+    throw error;
+  }
   return async () => {
-    server.closeAllConnections();
-    await new Promise<void>((done, reject) =>
-      server.close((error) => (error ? reject(error) : done())),
-    );
-    db.close();
+    if (!server.killed && server.exitCode === null) {
+      server.send('stop');
+      await Promise.race([
+        once(server, 'exit'),
+        new Promise((done) =>
+          setTimeout(() => {
+            server.kill();
+            done(null);
+          }, 5000),
+        ),
+      ]);
+    }
   };
 }

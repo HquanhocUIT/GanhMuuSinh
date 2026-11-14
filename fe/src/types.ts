@@ -69,6 +69,16 @@ export interface MapCandidate {
   sourceUrl: string;
   mapUrl: string;
 }
+export interface WardRoute {
+  id: string;
+  title: string;
+  ward: string;
+  stops: MapCandidate[];
+  stopCount: number;
+  distance: number;
+  duration: number;
+  label: string;
+}
 export interface Catalog {
   regions: { id: RegionId; name: string; subtitle: string; center: [number, number] }[];
   allergens: { id: string; name: string; en: string }[];

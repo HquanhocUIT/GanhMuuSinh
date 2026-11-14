@@ -13,10 +13,18 @@ import 'leaflet/dist/leaflet.css';
 import type { MapCandidate, Vendor } from '../types';
 import { money } from '../lib/api';
 
-function FitStops({ vendors, candidates }: { vendors: Vendor[]; candidates: MapCandidate[] }) {
+function FitStops({
+  vendors,
+  candidates,
+  routeCandidates,
+}: {
+  vendors: Vendor[];
+  candidates: MapCandidate[];
+  routeCandidates: MapCandidate[];
+}) {
   const map = useMap();
   useEffect(() => {
-    const points = [...vendors, ...candidates];
+    const points = [...vendors, ...candidates, ...routeCandidates];
     if (points.length)
       map.fitBounds(L.latLngBounds(points.map((v) => [v.lat, v.lng])), {
         padding: [45, 45],
@@ -24,7 +32,7 @@ function FitStops({ vendors, candidates }: { vendors: Vendor[]; candidates: MapC
       });
     const timer = setTimeout(() => map.invalidateSize(), 100);
     return () => clearTimeout(timer);
-  }, [vendors, candidates, map]);
+  }, [vendors, candidates, routeCandidates, map]);
   return null;
 }
 
@@ -127,11 +135,13 @@ function CandidateLayer({ candidates }: { candidates: MapCandidate[] }) {
 export default function FoodMap({
   vendors,
   candidates = [],
+  routeCandidates = [],
   route = false,
   onSelect,
 }: {
   vendors: Vendor[];
   candidates?: MapCandidate[];
+  routeCandidates?: MapCandidate[];
   route?: boolean;
   onSelect: (v: Vendor) => void;
 }) {
@@ -146,11 +156,17 @@ export default function FoodMap({
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <FitStops vendors={vendors} candidates={candidates} />
-      {route && (
+      <FitStops vendors={vendors} candidates={candidates} routeCandidates={routeCandidates} />
+      {route && vendors.length > 1 && (
         <Polyline
           positions={vendors.map((v) => [v.lat, v.lng])}
           pathOptions={{ color: '#b64b2d', weight: 4, dashArray: '8 10' }}
+        />
+      )}
+      {routeCandidates.length > 1 && (
+        <Polyline
+          positions={routeCandidates.map((stop) => [stop.lat, stop.lng])}
+          pathOptions={{ color: '#a95b2e', weight: 3, dashArray: '7 9' }}
         />
       )}
       {vendors.map((v, i) => (
@@ -178,6 +194,34 @@ export default function FoodMap({
         </Marker>
       ))}
       {candidates.length > 0 && <CandidateLayer candidates={candidates} />}
+      {routeCandidates.map((stop, index) => (
+        <Marker
+          key={stop.id}
+          position={[stop.lat, stop.lng]}
+          title={`${index + 1}. ${stop.name} · ghim tham khảo`}
+          alt={`${index + 1}. ${stop.dish}, ghim tham khảo chưa xác minh`}
+          icon={L.divIcon({
+            html: `<span>${index + 1}</span>`,
+            className: 'food-pin food-pin-ward',
+            iconSize: [40, 40],
+            iconAnchor: [20, 40],
+          })}
+        >
+          <Popup>
+            <span className="map-candidate-status">Điểm {index + 1} · chưa xác minh</span>
+            <strong>{stop.name}</strong>
+            <p>{stop.dish}</p>
+            <a
+              className="map-popup-link"
+              href={stop.mapUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Kiểm tra ghim nguồn →
+            </a>
+          </Popup>
+        </Marker>
+      ))}
     </MapContainer>
   );
 }
