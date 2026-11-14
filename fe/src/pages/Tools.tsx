@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import {
+  ArrowLeft,
   ArrowRight,
   AudioLines,
   Camera,
@@ -23,7 +24,7 @@ import { PassportStamp } from '../components/Brand';
 import type { ScanResult } from '../types';
 
 export default function Tools({ mode }: { mode: 'voice' | 'scan' }) {
-  const { catalog, active, t, navigate } = useApp();
+  const { catalog, active, wardRoute, t, navigate } = useApp();
   const stored = readStorage<string>('gms-scan-vendor', '');
   const [vendorId, setVendorId] = useState(() =>
     [...catalog.vendors, ...catalog.mapCandidates].some((v) => v.id === stored)
@@ -48,6 +49,19 @@ export default function Tools({ mode }: { mode: 'voice' | 'scan' }) {
     );
   return (
     <div className="container inner-page tools-page">
+      {wardRoute?.stops.some((stop) => stop.id === vendorId) && (
+        <button
+          className="back-link"
+          onClick={() =>
+            navigate(
+              `ward-journey?ward=${encodeURIComponent(wardRoute.ward)}&route=${encodeURIComponent(wardRoute.id)}`,
+            )
+          }
+        >
+          <ArrowLeft size={16} />
+          {t('Về hành trình theo phường', 'Back to ward journey')}
+        </button>
+      )}
       <div className="page-heading">
         <div>
           <span className="eyebrow">A LITTLE TECH, A LOT OF CONNECTION</span>

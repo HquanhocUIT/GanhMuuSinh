@@ -2206,9 +2206,18 @@ main:focus {
 .ward-journey-summary > span svg {
   color: #718468;
 }
+.ward-journey-summary .ward-unknown-price {
+  color: #8b7259;
+  font-size: 11px;
+}
+.ward-journey-summary > .button {
+  margin-left: 0;
+}
+.ward-journey-summary > .button:first-of-type {
+  margin-left: auto;
+}
 .ward-directions {
   min-height: 44px;
-  margin-left: auto;
   font-size: 11px;
 }
 .ward-stop-number {
@@ -2222,41 +2231,48 @@ main:focus {
 .ward-itinerary .itinerary-content > p {
   font-size: 12px;
 }
-.ward-stop-actions {
+.ward-itinerary .ward-stop-price {
+  color: #8b7259;
+}
+.ward-quest-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 12px;
+  margin-top: 10px;
 }
-.ward-stop-actions a {
+.ward-quest-actions > :is(button, a) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 4px;
   min-height: 44px;
-  padding: 8px 10px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
+  padding: 8px 3px;
   color: var(--green);
   font-size: 10px;
   font-weight: 600;
+  white-space: nowrap;
 }
-.ward-stop-actions button {
+.ward-quest-actions > button:last-child {
+  margin-left: auto;
+}
+.ward-quest-actions > :is(button, a):hover,
+.ward-stop-links > :is(button, a):hover {
+  color: var(--orange);
+}
+.ward-stop-links {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 2px;
+}
+.ward-stop-links > :is(button, a) {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 5px;
   min-height: 44px;
-  padding: 8px 10px;
-  border: 1px solid #c9dacd;
-  border-radius: 8px;
-  background: #edf3ea;
   color: var(--green);
   font-size: 10px;
-  font-weight: 600;
-}
-.ward-stop-actions button:hover {
-  background: #dfeadd;
 }
 .ward-passport-link {
   margin-top: 18px;
@@ -2281,10 +2297,6 @@ main:focus {
   background: #fffdf3ee;
   color: var(--ink);
   font-size: 9px;
-}
-.ward-stop-actions a:hover {
-  border-color: #bfd1b8;
-  background: var(--green-soft);
 }
 .food-pin-ward span {
   width: 40px;
@@ -2312,8 +2324,10 @@ main:focus {
     width: 100%;
     margin-left: 0;
   }
-  .ward-stop-actions a {
-    flex: 1 1 auto;
+  .ward-journey-summary > .button:first-of-type {
+    margin-left: 0;
+  }
+  .ward-quest-actions > :is(button, a) {
     font-size: 11px;
   }
 }
@@ -3985,6 +3999,9 @@ main:focus {
     flex-direction: column-reverse;
     min-height: 0;
     border-radius: 13px;
+  }
+  .ward-map-layout {
+    flex-direction: column;
   }
   .map-panel,
   .food-map,

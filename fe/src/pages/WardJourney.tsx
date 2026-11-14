@@ -9,10 +9,10 @@ import {
   Footprints,
   MapPin,
   Route,
+  Volume2,
 } from 'lucide-react';
 import { useApp } from '../context';
-import { api } from '../lib/api';
-import { writeStorage } from '../lib/api';
+import { api, writeStorage } from '../lib/api';
 import type { MapCandidate, Vendor, WardRoute } from '../types';
 
 const FoodMap = lazy(() => import('../components/FoodMap'));
@@ -28,7 +28,7 @@ function directionsTo(stop: MapCandidate) {
 }
 
 export default function WardJourney() {
-  const { wardRoute, openWardRoute, passport, navigate, t } = useApp();
+  const { catalog, wardRoute, openWardRoute, passport, navigate, story, t } = useApp();
   const [hash, setHash] = useState(window.location.hash);
   const [loadedRoute, setLoadedRoute] = useState<WardRoute | null>(null);
   const [error, setError] = useState('');
@@ -113,10 +113,12 @@ export default function WardJourney() {
   const completed = route.stops.filter((stop) =>
     passport.stamps.some((stamp) => stamp.vendorId === stop.id),
   );
-  const scanStop = (id: string) => {
+  const openTool = (tool: 'voice' | 'scan', id: string) => {
     writeStorage('gms-scan-vendor', id);
-    navigate('scan');
+    navigate(tool);
   };
+  const nextStop =
+    route.stops.find((stop) => !completed.some((done) => done.id === stop.id)) ?? firstStop;
   return (
     <div className="container inner-page ward-journey-page">
       <button
@@ -128,7 +130,7 @@ export default function WardJourney() {
       </button>
       <div className="page-heading">
         <div>
-          <span className="eyebrow">{t('LỘ TRÌNH THEO PHƯỜNG', 'WARD FOOD ROUTE')}</span>
+          <span className="eyebrow">YOUR STREET-FOOD QUEST · {t('THEO PHƯỜNG', 'BY WARD')}</span>
           <h1>{route.title}</h1>
           <p>
             {t(
@@ -145,7 +147,7 @@ export default function WardJourney() {
           <span>{t('điểm có dấu trải nghiệm', 'stops with a stamp')}</span>
         </div>
       </div>
-      <div className="ward-journey-summary">
+      <div className="journey-summary ward-journey-summary">
         <span>
           <MapPin size={17} />
           {route.stops.length} {t('điểm dừng', 'stops')}
@@ -156,8 +158,12 @@ export default function WardJourney() {
         <span>
           <Clock3 size={17} />~{route.duration} {t('phút', 'min')}
         </span>
+        <span className="ward-unknown-price">{t('Giá chưa xác minh', 'Price unverified')}</span>
+        <button className="button secondary small" onClick={() => openTool('voice', nextStop.id)}>
+          <Volume2 size={16} /> Voice Bridge
+        </button>
         <a
-          className="button primary ward-directions"
+          className="button secondary small ward-directions"
           href={directionsTo(firstStop)}
           target="_blank"
           rel="noopener noreferrer"
@@ -169,54 +175,68 @@ export default function WardJourney() {
       <div className="map-layout ward-map-layout">
         <aside className="map-sidebar">
           <div className="map-sidebar-heading">
-            <h2>{t('Đi lần lượt theo tuyến', 'Follow the route in order')}</h2>
+            <h2>{t('Những điểm dừng của bạn', 'Your little stops')}</h2>
             <span>
               {route.stops.length} {t('điểm', 'places')}
             </span>
           </div>
           <ol className="itinerary ward-itinerary">
-            {route.stops.map((stop, index) => (
-              <li key={stop.id}>
-                <span
-                  className={`stop-number ward-stop-number ${passport.stamps.some((stamp) => stamp.vendorId === stop.id) ? 'done' : ''}`}
-                >
-                  {passport.stamps.some((stamp) => stamp.vendorId === stop.id) ? (
-                    <Check size={16} />
-                  ) : (
-                    index + 1
-                  )}
-                </span>
-                <div className="itinerary-content">
-                  <div className="itinerary-topline">
-                    <span>
-                      {index === 0
-                        ? t('Bắt đầu ở đây', 'Start here')
-                        : t(`Điểm ${index + 1}`, `Stop ${index + 1}`)}
-                    </span>
-                    {passport.stamps.some((stamp) => stamp.vendorId === stop.id) && (
-                      <span className="status-tag">{t('Đã lưu dấu', 'Stamped')}</span>
-                    )}
+            {route.stops.map((stop, index) => {
+              const stamped = passport.stamps.some((stamp) => stamp.vendorId === stop.id);
+              const published = catalog.vendors.find((vendor) => vendor.id === stop.id);
+              return (
+                <li key={stop.id}>
+                  <span className={`stop-number ward-stop-number ${stamped ? 'done' : ''}`}>
+                    {stamped ? <Check size={16} /> : index + 1}
+                  </span>
+                  <div className="itinerary-content">
+                    <div className="itinerary-topline">
+                      <span>
+                        {index === 0
+                          ? t('Bắt đầu ở đây · Chưa rõ giờ bán', 'Start here · Hours unverified')
+                          : t(
+                              `Điểm ${index + 1} · Chưa rõ giờ bán`,
+                              `Stop ${index + 1} · Hours unverified`,
+                            )}
+                      </span>
+                      {stamped && <span className="status-tag">{t('Đã lưu dấu', 'Stamped')}</span>}
+                    </div>
+                    <h3>{stop.name}</h3>
+                    <p>{stop.dish}</p>
+                    <strong className="ward-stop-price">
+                      {t('Giá chưa xác minh', 'Price unverified')}
+                    </strong>
+                    <small>
+                      <MapPin size={13} />
+                      {route.ward}
+                      {stop.area ? ` · ${stop.area}` : ''}
+                    </small>
+                    <div className="itinerary-actions ward-quest-actions">
+                      {published?.story ? (
+                        <button onClick={() => story(published)}>
+                          {t('Câu chuyện', 'Story')} <ArrowRight size={14} />
+                        </button>
+                      ) : (
+                        <a href={stop.mapUrl} target="_blank" rel="noopener noreferrer">
+                          {t('Thông tin ghim', 'Pin details')} <ExternalLink size={13} />
+                        </a>
+                      )}
+                      <button onClick={() => openTool('scan', stop.id)}>
+                        <Camera size={14} /> {t('Lưu dấu', 'Get a stamp')}
+                      </button>
+                    </div>
+                    <div className="ward-stop-links">
+                      <button onClick={() => openTool('voice', stop.id)}>
+                        <Volume2 size={14} /> Voice Bridge
+                      </button>
+                      <a href={directionsTo(stop)} target="_blank" rel="noopener noreferrer">
+                        {t('Chỉ đường', 'Directions')} <ArrowRight size={13} />
+                      </a>
+                    </div>
                   </div>
-                  <h3>{stop.name}</h3>
-                  <p>{stop.dish}</p>
-                  <small>
-                    <MapPin size={13} />
-                    {stop.area || stop.ward || route.ward}
-                  </small>
-                  <div className="ward-stop-actions">
-                    <button onClick={() => scanStop(stop.id)}>
-                      <Camera size={14} /> {t('Food X-Ray · Lưu dấu', 'Food X-Ray · Stamp')}
-                    </button>
-                    <a href={directionsTo(stop)} target="_blank" rel="noopener noreferrer">
-                      {t('Chỉ đường', 'Directions')} <ArrowRight size={14} />
-                    </a>
-                    <a href={stop.mapUrl} target="_blank" rel="noopener noreferrer">
-                      {t('Ghim nguồn', 'Source pin')} <ExternalLink size={13} />
-                    </a>
-                  </div>
-                </div>
-              </li>
-            ))}
+                </li>
+              );
+            })}
           </ol>
         </aside>
         <div className="map-panel">
@@ -240,8 +260,8 @@ export default function WardJourney() {
       </div>
       <p className="small-note page-note">
         {t(
-          'Giờ bán, giá và tình trạng còn bán của các ghim tham khảo chưa được xác minh. Khoảng cách và thời gian là ước tính; hãy kiểm tra ghim nguồn hoặc hỏi người bán trước khi đi.',
-          'Hours, prices and availability of reference pins are unverified. Distance and time are estimates; check the source pin or ask the vendor before visiting.',
+          'Ghim tham khảo chưa có câu chuyện được người bán đồng ý chia sẻ, giá hoặc giờ bán xác minh. Khoảng cách và thời gian là ước tính; hãy đối chiếu ghim nguồn trước khi đi. Dấu trải nghiệm không xác minh mua hàng hay vị trí.',
+          'Reference pins lack vendor-approved stories, verified prices or opening hours. Distance and time are estimates; check the source pin before visiting. Experience stamps do not verify a purchase or location.',
         )}
       </p>
       <button className="button secondary ward-passport-link" onClick={() => navigate('passport')}>

@@ -117,10 +117,19 @@ test('ward suggestion previews, starts, scans and stamps an ordered route', asyn
   const firstPinId = await page.evaluate(
     () => JSON.parse(localStorage.getItem('gms-ward-route')!).stops[0].id,
   );
+  await expect(page.locator('.ward-itinerary > li').first()).toContainText('Giá chưa xác minh');
   await page
     .locator('.ward-itinerary > li')
     .first()
-    .getByRole('button', { name: /Food X-Ray/ })
+    .getByRole('button', { name: 'Voice Bridge' })
+    .click();
+  await expect(page.locator('#tool-vendor')).toHaveValue(firstPinId);
+  await expect(page.locator('.order-sentence')).toContainText('chè');
+  await page.getByRole('button', { name: 'Về hành trình theo phường' }).click();
+  await page
+    .locator('.ward-itinerary > li')
+    .first()
+    .getByRole('button', { name: 'Lưu dấu' })
     .click();
   await expect(page.locator('#tool-vendor')).toHaveValue(firstPinId);
   await page.getByRole('button', { name: 'Thử trải nghiệm minh họa' }).click();
@@ -136,6 +145,33 @@ test('ward suggestion previews, starts, scans and stamps an ordered route', asyn
   await expect(page.locator('.journey-progress')).toContainText('1/3');
   await page.getByRole('button', { name: 'Chọn tuyến khác' }).click();
   await expect(page.locator('.ward-route-card')).toHaveCount(3);
+});
+
+test('one-stop ward route keeps voice, X-Ray and progress connected', async ({ page }) => {
+  await page.locator('.planner-ward-search input').fill('Phường Bình Phú');
+  await page.getByRole('button', { name: 'Gợi ý cho mình' }).click();
+  await expect(page.locator('.ward-route-card').first()).toContainText('1 điểm');
+  await page
+    .locator('.ward-route-card')
+    .first()
+    .getByRole('button', { name: /Xem trước hành trình/ })
+    .click();
+  await expect(page.getByRole('dialog')).toContainText('Gánh Trái Cây');
+  await page.getByRole('button', { name: 'Bắt đầu hành trình này' }).click();
+  await expect(page.locator('.journey-progress')).toContainText('0/1');
+  await expect(page.locator('.ward-itinerary > li')).toHaveCount(1);
+  await expect(
+    page.locator('.ward-itinerary > li').first().getByRole('link', { name: 'Thông tin ghim' }),
+  ).toBeVisible();
+  await page
+    .locator('.ward-itinerary > li')
+    .first()
+    .getByRole('button', { name: 'Lưu dấu' })
+    .click();
+  await expect(page.locator('#tool-vendor')).toHaveValue(/reference-/);
+  await page.getByRole('button', { name: 'Thử trải nghiệm minh họa' }).click();
+  await page.locator('.scan-result-actions').getByRole('button', { name: 'Về hành trình' }).click();
+  await expect(page.locator('.journey-progress')).toContainText('1/1');
 });
 
 test('voice options compose a real order and phrasebook translates without AI', async ({
