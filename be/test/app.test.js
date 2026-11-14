@@ -311,6 +311,26 @@ test('cross-origin writes are rejected', async () =>
     );
   }));
 
+test('read-only planners work behind a frontend proxy without weakening write protection', async () =>
+  withAPI(async (request) => {
+    const headers = { Origin: 'https://ganhmuusinh.vercel.app' };
+    const suggestion = await request('/planner', config, undefined, headers);
+    assert.equal(suggestion.status, 200);
+    assert.ok(suggestion.data.stops.length > 0);
+
+    const byWard = await request('/planner/ward', { ward: 'Phường Tây Thạnh' }, undefined, headers);
+    assert.equal(byWard.status, 200);
+    assert.ok(byWard.data.routes.length > 0);
+
+    const write = await request(
+      '/scans',
+      { mode: 'demo', vendorId: 'bot-chien' },
+      undefined,
+      headers,
+    );
+    assert.equal(write.status, 403);
+  }));
+
 test('Gemini adapter uses an image request and validates upstream JSON', async () => {
   const visibleImage = {
     mimeType: 'image/png',

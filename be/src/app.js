@@ -81,6 +81,7 @@ export function createApp({ db, ai, frontendPath }) {
     .split(',')
     .map((origin) => origin.trim())
     .filter(Boolean);
+  const readOnlyPostPaths = new Set(['/planner', '/planner/ward']);
   app.disable('x-powered-by');
   app.use((_req, res, next) => {
     res.setHeader('X-Content-Type-Options', 'nosniff');
@@ -89,7 +90,8 @@ export function createApp({ db, ai, frontendPath }) {
   });
   app.use('/api', (req, res, next) => {
     res.setHeader('Cache-Control', 'no-store');
-    // JSON plus an Origin check protect local anonymous passport mutations.
+    // The planners only calculate suggestions. Keep the Origin check for
+    // state-changing requests, even when a frontend reverse proxy is used.
     if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method)) {
       const allowed = new Set([
         'http://localhost:5173',
@@ -98,7 +100,11 @@ export function createApp({ db, ai, frontendPath }) {
         `https://${req.get('host')}`,
         ...configuredOrigins,
       ]);
-      if (req.get('origin') && !allowed.has(req.get('origin')))
+      if (
+        !(req.method === 'POST' && readOnlyPostPaths.has(req.path)) &&
+        req.get('origin') &&
+        !allowed.has(req.get('origin'))
+      )
         return res.status(403).json({ error: 'Nguồn yêu cầu không được phép.' });
       if (!req.is('application/json'))
         return res.status(415).json({ error: 'Yêu cầu cần có định dạng JSON.' });
