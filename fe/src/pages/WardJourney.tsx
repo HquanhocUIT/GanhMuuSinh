@@ -133,10 +133,15 @@ export default function WardJourney() {
           <span className="eyebrow">YOUR STREET-FOOD QUEST · {t('THEO PHƯỜNG', 'BY WARD')}</span>
           <h1>{route.title}</h1>
           <p>
-            {t(
-              'Các ghim tham khảo được xếp thành một vòng khám phá nhỏ. Kiểm tra từng địa điểm trước khi ghé.',
-              'Reference pins arranged into a small food journey. Check each stop before visiting.',
-            )}
+            {route.stops.length === 1
+              ? t(
+                  'Phường này hiện có một ghim món ăn tham khảo. Kiểm tra địa điểm trước khi ghé.',
+                  'This ward currently has one reference food pin. Check the place before visiting.',
+                )
+              : t(
+                  'Các ghim tham khảo được xếp thành một vòng khám phá nhỏ. Kiểm tra từng địa điểm trước khi ghé.',
+                  'Reference pins arranged into a small food journey. Check each stop before visiting.',
+                )}
           </p>
         </div>
         <div className="journey-progress">

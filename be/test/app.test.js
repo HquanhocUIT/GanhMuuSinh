@@ -107,24 +107,34 @@ test('distance is symmetric and a route chooses the shortest order', () => {
   assert.ok(actual <= alternative + 1e-9);
 });
 
-test('ward routes remove truncated labels and favor three different food families', () => {
+test('ward routes quarantine suspect labels and keep food families distinct', () => {
   const visible = getWardCandidates();
   assert.equal(references.length, 130);
-  assert.equal(visible.length, 127);
+  assert.equal(visible.length, 126);
   assert.equal(referenceWards.length, 51);
-  for (const id of ['reference-gms-158', 'reference-gms-166', 'reference-gms-183'])
+  for (const id of [
+    'reference-gms-158',
+    'reference-gms-166',
+    'reference-gms-183',
+    'reference-gms-356',
+  ])
     assert.ok(!visible.some((pin) => pin.id === id));
-  assert.equal(dishGroup('bánh mì'), dishGroup('Bánh mì 0 nhà'));
+  assert.equal(dishGroup('bánh mì'), dishGroup('Bánh Mì Tuổi Thơ'));
+  assert.equal(dishGroup('Bún Gạo Xào Chay'), dishGroup('Bún Xào Chay-3 anh em'));
+  assert.equal(dishGroup('bánh tai yến, quai vạc'), dishGroup('Bánh Tai Yến'));
+  assert.equal(dishGroup('chuối, khoai lang chiên'), dishGroup('Chuối chiên'));
+  assert.equal(dishGroup('hột vịt lộn Út Mê'), dishGroup('Hột Vịt Lộn Úp Mề'));
+  assert.equal(dishGroup('Trứng muối bắc thảo'), dishGroup('Trứng muối, bắc thảo'));
 
   const benThanh = planWardRoutes('Phường Bến Thành');
   assert.equal(benThanh.length, 3);
-  assert.deepEqual(benThanh.map((route) => route.stops.length).sort(), [2, 3, 3]);
+  assert.deepEqual(benThanh.map((route) => route.stops.length).sort(), [2, 2, 3]);
   for (const ward of referenceWards) {
     const routes = planWardRoutes(ward);
     const ids = routes.flatMap((route) => route.stops.map((pin) => pin.id));
     assert.equal(new Set(ids).size, ids.length, `${ward}: repeated physical pin`);
     for (const route of routes) {
-      assert.equal(route.revision, 2);
+      assert.equal(route.revision, 3);
       assert.ok(route.stops.length <= 3);
       assert.equal(
         new Set(route.stops.map((pin) => dishGroup(pin.dish))).size,
@@ -134,6 +144,13 @@ test('ward routes remove truncated labels and favor three different food familie
     }
   }
 });
+
+test('unknown ward returns a readable Vietnamese message', async () =>
+  withAPI(async (request) => {
+    const result = await request('/planner/ward', { ward: 'Phường Không Có Ghim' });
+    assert.equal(result.status, 404);
+    assert.equal(result.data.error, 'Chưa có gánh hàng ăn tham khảo được ghi nhận ở phường này.');
+  }));
 
 test('catalog distinguishes illustrative vendors from reference pins and does not pretend AI is connected', async () =>
   withAPI(async (request) => {

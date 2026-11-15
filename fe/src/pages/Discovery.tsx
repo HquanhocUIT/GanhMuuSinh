@@ -393,7 +393,11 @@ export default function Discovery({
             </label>
             <button type="submit" className="button primary planner-submit" disabled={planning}>
               <Sparkles size={18} />
-              {planning ? t('Đang lên đường…', 'Planning…') : t('Gợi ý cho mình', 'Plan my quest')}
+              {planning
+                ? t('Đang lên đường…', 'Planning…')
+                : ward.trim()
+                  ? t('Gợi ý theo phường', 'Explore this ward')
+                  : t('Gợi ý cho mình', 'Plan my quest')}
             </button>
           </form>
           <label className="planner-ward-search">
@@ -426,6 +430,14 @@ export default function Discovery({
               )}
             </span>
           </label>
+          {ward.trim() && (
+            <p className="planner-ward-disclaimer">
+              {t(
+                'Gợi ý theo phường chỉ dựa trên phường và nhóm món. Giờ bán, giá và nguyên liệu của các ghim này chưa được xác minh, nên lựa chọn khu vực, giờ, ngân sách và dị ứng phía trên không áp dụng cho tuyến theo phường.',
+                'Ward suggestions use the ward and dish type only. Opening hours, prices and ingredients are unverified, so the region, time, budget and allergen choices above do not apply to ward routes.',
+              )}
+            </p>
+          )}
           <div className="planner-bottom">
             <button
               className="filter-button"
@@ -437,12 +449,14 @@ export default function Discovery({
               {excluded.length > 0 && <span className="count-dot">{excluded.length}</span>}
               <ChevronDown size={14} className={advanced ? 'rotated' : ''} />
             </button>
-            <span>
-              {t(
-                'Chưa chọn vùng/giờ? Mình gợi ý một chiều Sài Gòn.',
-                'No destination yet? Try an afternoon in Saigon.',
-              )}
-            </span>
+            {!ward.trim() && (
+              <span>
+                {t(
+                  'Chưa chọn vùng/giờ? Mình gợi ý một chiều Sài Gòn.',
+                  'No destination yet? Try an afternoon in Saigon.',
+                )}
+              </span>
+            )}
           </div>
           {advanced && (
             <fieldset className="allergen-filters">
@@ -498,16 +512,23 @@ export default function Discovery({
             <div className="ward-route-heading">
               <div>
                 <span className="eyebrow">
-                  {t('ĐI MỘT VÒNG, THỬ NHIỀU VỊ', 'A FEW LITTLE LOOPS')}
+                  {wardRoutes.every((route) => route.stopCount === 1)
+                    ? t('MỘT ĐIỂM DỪNG, MỘT VỊ NGON', 'ONE STOP, ONE FLAVOR')
+                    : t('ĐI MỘT VÒNG, THỬ NHIỀU VỊ', 'A FEW LITTLE LOOPS')}
                 </span>
                 <h3 id="ward-routes-title">
                   {t(`Gợi ý quanh ${wardRoutes[0].ward}`, `Explore ${wardRoutes[0].ward}`)}
                 </h3>
                 <p>
-                  {t(
-                    `${wardRoutes.length} tuyến được chia từ các ghim khác nhau để hạn chế lặp điểm.`,
-                    `${wardRoutes.length} routes use separate pins to reduce repetition.`,
-                  )}
+                  {wardRoutes.every((route) => route.stopCount === 1)
+                    ? t(
+                        `${wardRoutes.length} ghim tham khảo để bạn chọn điểm ghé.`,
+                        `${wardRoutes.length} reference pins to choose from.`,
+                      )
+                    : t(
+                        `${wardRoutes.length} tuyến được chia từ các ghim khác nhau để hạn chế lặp điểm.`,
+                        `${wardRoutes.length} routes use separate pins to reduce repetition.`,
+                      )}
                 </p>
               </div>
               <span className="reference-badge">{t('Dữ liệu tham khảo', 'Reference data')}</span>

@@ -94,11 +94,15 @@ test('custom planner honors exclusions and starts an active journey', async ({ p
 
 test('ward suggestion previews, starts, scans and stamps an ordered route', async ({ page }) => {
   await page.locator('.planner-ward-search input').fill('Phường Bến Thành');
-  await page.getByRole('button', { name: 'Gợi ý cho mình' }).click();
+  await expect(page.locator('.planner-ward-disclaimer')).toContainText(
+    'lựa chọn khu vực, giờ, ngân sách và dị ứng phía trên không áp dụng',
+  );
+  await page.getByRole('button', { name: 'Gợi ý theo phường' }).click();
   await expect(page.locator('.ward-route-card')).toHaveCount(3);
   for (const card of await page.locator('.ward-route-card').all()) {
     const dishes = await card.locator('ol li strong').allTextContents();
     expect(dishes.map((dish) => dish.toLocaleLowerCase('vi'))).not.toContain('bánh b');
+    expect(dishes).not.toContain('Bánh mì 0 nhà');
     expect(dishes.filter((dish) => /^bánh mì/i.test(dish)).length).toBeLessThanOrEqual(1);
   }
   await page
@@ -158,15 +162,16 @@ test('ward suggestion previews, starts, scans and stamps an ordered route', asyn
   await expect(page.locator('.journey-progress')).toContainText('1/3');
   await expect
     .poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('gms-ward-route')!).revision))
-    .toBe(2);
+    .toBe(3);
   await page.getByRole('button', { name: 'Chọn tuyến khác' }).click();
   await expect(page.locator('.ward-route-card')).toHaveCount(3);
 });
 
 test('one-stop ward route keeps voice, X-Ray and progress connected', async ({ page }) => {
   await page.locator('.planner-ward-search input').fill('Phường Bình Phú');
-  await page.getByRole('button', { name: 'Gợi ý cho mình' }).click();
+  await page.getByRole('button', { name: 'Gợi ý theo phường' }).click();
   await expect(page.locator('.ward-route-card').first()).toContainText('1 điểm');
+  await expect(page.locator('.ward-route-card').first()).toContainText('Điểm 1 · Phường Bình Phú');
   await page
     .locator('.ward-route-card')
     .first()

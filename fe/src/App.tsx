@@ -59,7 +59,7 @@ export default function App() {
     const value = readStorage<WardRoute | null>('gms-ward-route', null);
     return value &&
       typeof value.id === 'string' &&
-      value.revision === 2 &&
+      value.revision === 3 &&
       typeof value.ward === 'string' &&
       Array.isArray(value.stops) &&
       value.stops.length > 0
@@ -525,10 +525,15 @@ export default function App() {
             </span>
             <h3 className="display-small">{selectedWard.title}</h3>
             <p className="muted">
-              {t(
-                'Đi lần lượt qua các ghim trong phường. Mỗi điểm có chỉ đường, Food X-Ray và dấu trải nghiệm trong hộ chiếu.',
-                'Visit the pins in order. Each stop has directions, Food X-Ray and a passport experience stamp.',
-              )}
+              {selectedWard.stops.length === 1
+                ? t(
+                    'Ghé ghim tham khảo này để mở chỉ đường, Food X-Ray và dấu trải nghiệm trong hộ chiếu.',
+                    'Visit this reference pin for directions, Food X-Ray and a passport experience stamp.',
+                  )
+                : t(
+                    'Đi lần lượt qua các ghim trong phường. Mỗi điểm có chỉ đường, Food X-Ray và dấu trải nghiệm trong hộ chiếu.',
+                    'Visit the pins in order. Each stop has directions, Food X-Ray and a passport experience stamp.',
+                  )}
             </p>
             <div className="journey-facts">
               <span>

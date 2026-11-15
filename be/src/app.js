@@ -210,10 +210,7 @@ export function createApp({ db, ai, frontendPath }) {
     const { ward } = wardPlannerSchema.parse(req.body);
     const routes = planWardRoutes(ward);
     if (!routes.length)
-      throw new ServiceError(
-        404,
-        'ChÆ°a cÃ³ ghÃ¡nh Äƒn tham kháº£o Ä‘Æ°á»£c ghi nháº­n á»Ÿ phÆ°á»ng nÃ y.',
-      );
+      throw new ServiceError(404, 'Chưa có gánh hàng ăn tham khảo được ghi nhận ở phường này.');
     res.json({ ward, routes });
   });
   app.post('/api/orders/compose', (req, res) => {

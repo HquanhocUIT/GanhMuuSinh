@@ -5,6 +5,9 @@ import { distanceKm } from './planner.js';
 const wardFeatures = JSON.parse(
   readFileSync(new URL('../data/wards-hcm.geojson', import.meta.url), 'utf8'),
 ).features;
+// This source label includes an unexplained digit in both the seller name and
+// dish. Keep the original record for admin review until its wording is checked.
+const labelsPendingReview = new Set(['gms-356']);
 
 function pointInRing(lng, lat, ring) {
   let inside = false;
@@ -34,6 +37,7 @@ const candidates = references
     (ref) =>
       Number.isFinite(ref.lat) &&
       Number.isFinite(ref.lng) &&
+      !labelsPendingReview.has(ref.id) &&
       // Some public-list labels were cut off during extraction. Keep those
       // records for admin review, but never present a partial dish to visitors.
       !/(?:^|[\s,])\p{L}$/u.test(ref.dish.trim()),
@@ -72,6 +76,11 @@ export function dishGroup(dish) {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, ' ')
     .trim();
+  if (/^bun(?: gao)? xao chay(?: |$)/.test(normalized)) return 'bun xao chay';
+  if (/^hot vit lon(?: |$)/.test(normalized)) return 'hot vit lon';
+  if (/^banh tai yen(?: |$)/.test(normalized)) return 'banh tai yen';
+  if (/^trung muoi bac thao(?: |$)/.test(normalized)) return 'trung muoi bac thao';
+  if (/^chuoi (?:khoai lang )?chien(?: |$)/.test(normalized)) return 'chuoi chien';
   // A branded or garnished variant still counts as the same food family.
   const families = [
     'banh mi',
@@ -172,8 +181,8 @@ export function planWardRoutes(wardName) {
   }
   return choose((1 << wardPins.length) - 1, 0).routes.map(({ stops, distance }, index) => ({
     id: `${normalizedWard.replace(/[^\p{L}\p{N}]+/gu, '-')}-${index + 1}`,
-    revision: 2,
-    title: `Vòng ${index + 1} · ${wardName}`,
+    revision: 3,
+    title: `${stops.length === 1 ? 'Điểm' : 'Vòng'} ${index + 1} · ${wardName}`,
     ward: wardName,
     stops,
     stopCount: stops.length,

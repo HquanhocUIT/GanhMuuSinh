@@ -829,6 +829,16 @@ main:focus {
   font-size: 9px;
   text-align: right;
 }
+.planner-ward-disclaimer {
+  margin: -4px 24px 14px;
+  padding: 10px 12px;
+  border-left: 3px solid #aab99b;
+  border-radius: 0 6px 6px 0;
+  background: #f3f5ec;
+  color: var(--ink);
+  font-size: 12px;
+  line-height: 1.5;
+}
 .ward-route-results {
   margin: -5px 0 28px;
   padding: 20px;
