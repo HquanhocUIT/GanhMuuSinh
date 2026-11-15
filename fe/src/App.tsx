@@ -59,6 +59,7 @@ export default function App() {
     const value = readStorage<WardRoute | null>('gms-ward-route', null);
     return value &&
       typeof value.id === 'string' &&
+      value.revision === 2 &&
       typeof value.ward === 'string' &&
       Array.isArray(value.stops) &&
       value.stops.length > 0

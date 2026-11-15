@@ -71,6 +71,7 @@ export interface MapCandidate {
 }
 export interface WardRoute {
   id: string;
+  revision: number;
   title: string;
   ward: string;
   stops: MapCandidate[];

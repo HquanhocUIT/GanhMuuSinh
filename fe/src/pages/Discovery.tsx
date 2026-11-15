@@ -420,7 +420,10 @@ export default function Discovery({
               </datalist>
             </span>
             <span className="planner-ward-hint">
-              {t('52 phường hiện có ghim tham khảo', 'Reference pins in 52 wards')}
+              {t(
+                `${catalog.wards.length} phường hiện có ghim tham khảo`,
+                `Reference pins in ${catalog.wards.length} wards`,
+              )}
             </span>
           </label>
           <div className="planner-bottom">

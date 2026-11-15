@@ -11,8 +11,7 @@ function pointInRing(lng, lat, ring) {
   for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
     const [xi, yi] = ring[i];
     const [xj, yj] = ring[j];
-    if ((yi > lat) !== (yj > lat) && lng < ((xj - xi) * (lat - yi)) / (yj - yi) + xi)
-      inside = !inside;
+    if (yi > lat !== yj > lat && lng < ((xj - xi) * (lat - yi)) / (yj - yi) + xi) inside = !inside;
   }
   return inside;
 }
@@ -31,7 +30,14 @@ function findWard(point) {
 }
 
 const candidates = references
-  .filter((ref) => Number.isFinite(ref.lat) && Number.isFinite(ref.lng))
+  .filter(
+    (ref) =>
+      Number.isFinite(ref.lat) &&
+      Number.isFinite(ref.lng) &&
+      // Some public-list labels were cut off during extraction. Keep those
+      // records for admin review, but never present a partial dish to visitors.
+      !/(?:^|[\s,])\p{L}$/u.test(ref.dish.trim()),
+  )
   .map((ref) => ({
     id: `reference-${ref.id}`,
     name: ref.name,
@@ -46,8 +52,9 @@ const candidates = references
     mapUrl: ref.mapUrl,
   }));
 
-export const referenceWards = [...new Set(candidates.map((candidate) => candidate.ward).filter(Boolean))]
-  .sort((a, b) => a.localeCompare(b, 'vi'));
+export const referenceWards = [
+  ...new Set(candidates.map((candidate) => candidate.ward).filter(Boolean)),
+].sort((a, b) => a.localeCompare(b, 'vi'));
 
 export function getWardCandidates() {
   return candidates;
@@ -57,43 +64,121 @@ function routeDistance(stops) {
   return stops.slice(1).reduce((sum, stop, i) => sum + distanceKm(stops[i], stop) * 1.3, 0);
 }
 
-// Greedily forms compact, non-overlapping walking loops. Each reference pin is
-// assigned to at most one route in this response to keep alternatives distinct.
+export function dishGroup(dish) {
+  const normalized = dish
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
+    .replace(/đ/gi, 'd')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+  // A branded or garnished variant still counts as the same food family.
+  const families = [
+    'banh mi',
+    'banh bao',
+    'banh bo',
+    'banh cam',
+    'banh beo',
+    'banh khot',
+    'banh bong lan',
+    'nuoc mia',
+    'ca phe',
+    'bot chien',
+    'goi kho bo',
+    'pho',
+    'xoi',
+    'che',
+  ];
+  return (
+    families.find((family) => normalized === family || normalized.startsWith(`${family} `)) ??
+    normalized
+  );
+}
+
+function shortestOrder(stops) {
+  if (stops.length < 2) return { stops, distance: 0 };
+  let best = null;
+  function visit(prefix, remaining) {
+    if (!remaining.length) {
+      const distance = routeDistance(prefix);
+      if (!best || distance < best.distance) best = { stops: prefix, distance };
+      return;
+    }
+    for (let index = 0; index < remaining.length; index++)
+      visit(
+        [...prefix, remaining[index]],
+        remaining.filter((_, i) => i !== index),
+      );
+  }
+  visit([], stops);
+  return best;
+}
+
+// At most nine pins fall in one ward today. Search all small partitions so
+// distinct food families win first; walking distance breaks ties. Stops remain
+// disjoint across suggestions, and duplicate families get separate loops when
+// possible instead of being forced into a three-stop route.
 export function planWardRoutes(wardName) {
   const normalizedWard = wardName.trim().toLocaleLowerCase('vi');
-  const remaining = candidates.filter(
+  const wardPins = candidates.filter(
     (candidate) => candidate.ward?.toLocaleLowerCase('vi') === normalizedWard,
   );
-  if (!remaining.length) return [];
+  if (!wardPins.length) return [];
 
-  const routes = [];
-  const routeCount = Math.ceil(remaining.length / 3);
-  const baseSize = Math.floor(remaining.length / routeCount);
-  const largerRouteCount = remaining.length % routeCount;
-  for (let routeIndex = 0; routeIndex < routeCount; routeIndex++) {
-    const targetSize = baseSize + (routeIndex < largerRouteCount ? 1 : 0);
-    const anchor = remaining.shift();
-    const stops = [anchor];
-    while (stops.length < targetSize && remaining.length) {
-      const last = stops.at(-1);
-      let closestIndex = 0;
-      for (let i = 1; i < remaining.length; i++) {
-        if (distanceKm(last, remaining[i]) < distanceKm(last, remaining[closestIndex]))
-          closestIndex = i;
-      }
-      stops.push(remaining.splice(closestIndex, 1)[0]);
-    }
-    const distance = routeDistance(stops);
-    routes.push({
-      id: `${normalizedWard.replace(/[^\p{L}\p{N}]+/gu, '-')}-${routes.length + 1}`,
-      title: `Vòng ${routes.length + 1} · ${wardName}`,
-      ward: wardName,
-      stops,
-      stopCount: stops.length,
-      distance: Number(distance.toFixed(1)),
-      duration: Math.round((distance / 4) * 60 + stops.length * 20),
-      label: 'Tuyến tham khảo',
-    });
+  const groups = wardPins.map((pin) => dishGroup(pin.dish));
+  const counts = new Map();
+  for (const group of groups) counts.set(group, (counts.get(group) ?? 0) + 1);
+  const routeCount = Math.max(Math.ceil(wardPins.length / 3), ...counts.values());
+  const sizes = Array.from(
+    { length: routeCount },
+    (_, i) => Math.floor(wardPins.length / routeCount) + (i < wardPins.length % routeCount ? 1 : 0),
+  );
+  const routeCache = new Map();
+  function routeFor(mask) {
+    if (routeCache.has(mask)) return routeCache.get(mask);
+    const indices = wardPins.flatMap((_, index) => (mask & (1 << index) ? [index] : []));
+    const ordered = shortestOrder(indices.map((index) => wardPins[index]));
+    const duplicates = indices.length - new Set(indices.map((index) => groups[index])).size;
+    const result = { ...ordered, duplicates };
+    routeCache.set(mask, result);
+    return result;
   }
-  return routes;
+  const memo = new Map();
+  function choose(mask, slot) {
+    if (slot === sizes.length) return { duplicates: 0, distance: 0, routes: [] };
+    const key = `${mask}:${slot}`;
+    if (memo.has(key)) return memo.get(key);
+    let best = null;
+    for (let subset = mask; subset; subset = (subset - 1) & mask) {
+      let size = 0;
+      for (let bits = subset; bits; bits &= bits - 1) size++;
+      if (size !== sizes[slot]) continue;
+      const route = routeFor(subset);
+      const next = choose(mask ^ subset, slot + 1);
+      const candidate = {
+        duplicates: route.duplicates + next.duplicates,
+        distance: route.distance + next.distance,
+        routes: [route, ...next.routes],
+      };
+      if (
+        !best ||
+        candidate.duplicates < best.duplicates ||
+        (candidate.duplicates === best.duplicates && candidate.distance < best.distance - 1e-9)
+      )
+        best = candidate;
+    }
+    memo.set(key, best);
+    return best;
+  }
+  return choose((1 << wardPins.length) - 1, 0).routes.map(({ stops, distance }, index) => ({
+    id: `${normalizedWard.replace(/[^\p{L}\p{N}]+/gu, '-')}-${index + 1}`,
+    revision: 2,
+    title: `Vòng ${index + 1} · ${wardName}`,
+    ward: wardName,
+    stops,
+    stopCount: stops.length,
+    distance: Number(distance.toFixed(1)),
+    duration: Math.round((distance / 4) * 60 + stops.length * 20),
+    label: 'Tuyến tham khảo',
+  }));
 }

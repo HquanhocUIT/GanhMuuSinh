@@ -18,7 +18,7 @@ Trang có cấu trúc địa điểm với tên gánh, món bán, nhóm món, đ
 
 ## Ranh giới phường và tuyến tham khảo
 
-Danh sách 168 phường hiện hành và ranh giới tại `be/src/data/wards-hcm.geojson` lấy từ [tinhthanhpho.com](https://www.tinhthanhpho.com/api-docs), mục dữ liệu mở “Ranh giới xã theo tỉnh” (mã tỉnh 79). Trang nguồn ghi giấy phép CC BY 4.0. Ranh giới được dùng để xác định tên phường chứa tọa độ của 130 ghim tham khảo; 130 ghim hiện rơi vào 52 phường. Đây là phép gán theo tọa độ nguồn, chưa phải xác minh thực địa.
+Danh sách 168 phường hiện hành và ranh giới tại `be/src/data/wards-hcm.geojson` lấy từ [tinhthanhpho.com](https://www.tinhthanhpho.com/api-docs), mục dữ liệu mở “Ranh giới xã theo tỉnh” (mã tỉnh 79). Trang nguồn ghi giấy phép CC BY 4.0. Ranh giới được dùng để xác định tên phường chứa tọa độ các ghim tham khảo. Nguồn có 130 bản ghi; 3 nhãn món bị cắt cụt (`bánh b`, `Bánh bò, b`, `Kẹo b`) vẫn ở danh sách admin để rà soát nhưng không đưa ra gợi ý/bản đồ khách. 127 ghim còn lại rơi vào 51 phường. Đây là phép gán theo tọa độ nguồn, chưa phải xác minh thực địa.
 
 Planner tạo các tuyến tách biệt trong một lần gợi ý, tối đa 3 ghim mỗi tuyến, ưu tiên điểm gần nhau. Giá, giờ hoạt động, tình trạng còn bán, thành phần và dị ứng vẫn chưa được xác minh; tuyến chỉ giúp khám phá vị trí và cần mở nguồn bản đồ/kiểm tra trước khi đi.
 
@@ -55,6 +55,6 @@ Tệp [references-google-maps.js](../be/src/data/references-google-maps.js) ch�
 
 Admin có thể nhập nhóm này vào **Nguồn tham khảo**. Mỗi mục chỉ thành bản nháp, mang `verification: unverified`, `price: null` và `hours: null`; user chỉ thấy ghim cam tham khảo có nhãn chưa xác minh trên trang bản đồ, không thấy chúng như gánh đã xuất bản. Muốn đưa vào danh bạ/hành trình chính thức, admin cần đối chiếu địa chỉ, món, giá, giờ, nguyên liệu và chủ động xuất bản. Mục tương ứng với ba gánh đã có từ ganhmuusinh.vn được bỏ khỏi nhóm để tránh nhập trùng. Tệp là ảnh chụp dữ liệu tại ngày trên, không tự cập nhật theo Google Maps.
 
-Riêng trang **Bản đồ**, các mục tham khảo được trả thêm trong `mapCandidates` và vẽ bằng ghim màu cam có nhãn **chưa xác minh**. Đây là lớp khám phá nguồn công khai, không khẳng định người bán còn hoạt động; các ghim này không có giá/giờ, không vào hành trình, không có nút lưu dấu và không được dùng để lọc dị ứng. Gánh đã biên tập/xuất bản tiếp tục dùng ghim xanh. Danh mục không đồng bộ real-time.
+Riêng trang **Bản đồ**, 127 mục tham khảo có nhãn món đủ rõ được trả thêm trong `mapCandidates` và vẽ bằng ghim màu cam có nhãn **chưa xác minh**. Các ghim này có thể được xếp thành tuyến theo phường và nhận dấu trải nghiệm minh họa; AI chỉ cấp dấu khi ảnh khớp nhóm món được hỗ trợ. Dấu không xác minh đã mua hàng hay đến đúng địa điểm. Nguồn không có giá/giờ và không được dùng để kết luận an toàn dị ứng. Gánh đã biên tập/xuất bản tiếp tục dùng ghim xanh. Danh mục không đồng bộ real-time.
 
 OpenStreetMap chỉ cung cấp lớp bản đồ nền, không cung cấp dữ liệu gánh hàng trong danh sách này. Bản đồ ghi công [OpenStreetMap contributors](https://www.openstreetmap.org/copyright) và liên kết giấy phép dữ liệu [ODbL](https://opendatacommons.org/licenses/odbl/); dữ liệu nền và danh sách gánh là hai nguồn độc lập.

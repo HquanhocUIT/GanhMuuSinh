@@ -7,6 +7,12 @@ import { createAI } from '../src/services/ai.js';
 import { vendors } from '../src/data/catalog.js';
 import { references } from '../src/data/references.js';
 import { distanceKm, planQuest } from '../src/services/planner.js';
+import {
+  dishGroup,
+  getWardCandidates,
+  planWardRoutes,
+  referenceWards,
+} from '../src/services/ward-planner.js';
 import sharp from 'sharp';
 
 const config = {
@@ -101,6 +107,34 @@ test('distance is symmetric and a route chooses the shortest order', () => {
   assert.ok(actual <= alternative + 1e-9);
 });
 
+test('ward routes remove truncated labels and favor three different food families', () => {
+  const visible = getWardCandidates();
+  assert.equal(references.length, 130);
+  assert.equal(visible.length, 127);
+  assert.equal(referenceWards.length, 51);
+  for (const id of ['reference-gms-158', 'reference-gms-166', 'reference-gms-183'])
+    assert.ok(!visible.some((pin) => pin.id === id));
+  assert.equal(dishGroup('bánh mì'), dishGroup('Bánh mì 0 nhà'));
+
+  const benThanh = planWardRoutes('Phường Bến Thành');
+  assert.equal(benThanh.length, 3);
+  assert.deepEqual(benThanh.map((route) => route.stops.length).sort(), [2, 3, 3]);
+  for (const ward of referenceWards) {
+    const routes = planWardRoutes(ward);
+    const ids = routes.flatMap((route) => route.stops.map((pin) => pin.id));
+    assert.equal(new Set(ids).size, ids.length, `${ward}: repeated physical pin`);
+    for (const route of routes) {
+      assert.equal(route.revision, 2);
+      assert.ok(route.stops.length <= 3);
+      assert.equal(
+        new Set(route.stops.map((pin) => dishGroup(pin.dish))).size,
+        route.stops.length,
+        `${ward}: repeated food family in one route`,
+      );
+    }
+  }
+});
+
 test('catalog distinguishes illustrative vendors from reference pins and does not pretend AI is connected', async () =>
   withAPI(async (request) => {
     const result = await request('/catalog');
@@ -113,9 +147,8 @@ test('catalog distinguishes illustrative vendors from reference pins and does no
       vendors.map((vendor) => vendor.id).sort(),
     );
     assert.ok(result.data.vendors.every((vendor) => vendor.dataType === 'illustrative'));
-    const referenceIds = references
-      .filter((ref) => Number.isFinite(ref.lat) && Number.isFinite(ref.lng))
-      .map((ref) => `reference-${ref.id}`)
+    const referenceIds = getWardCandidates()
+      .map((pin) => pin.id)
       .sort();
     assert.deepEqual(result.data.mapCandidates.map((pin) => pin.id).sort(), referenceIds);
     assert.ok(result.data.mapCandidates.every((pin) => pin.sourceUrl?.startsWith('https://')));

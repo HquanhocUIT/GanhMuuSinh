@@ -96,6 +96,11 @@ test('ward suggestion previews, starts, scans and stamps an ordered route', asyn
   await page.locator('.planner-ward-search input').fill('Phường Bến Thành');
   await page.getByRole('button', { name: 'Gợi ý cho mình' }).click();
   await expect(page.locator('.ward-route-card')).toHaveCount(3);
+  for (const card of await page.locator('.ward-route-card').all()) {
+    const dishes = await card.locator('ol li strong').allTextContents();
+    expect(dishes.map((dish) => dish.toLocaleLowerCase('vi'))).not.toContain('bánh b');
+    expect(dishes.filter((dish) => /^bánh mì/i.test(dish)).length).toBeLessThanOrEqual(1);
+  }
   await page
     .locator('.ward-route-card')
     .first()
@@ -114,8 +119,8 @@ test('ward suggestion previews, starts, scans and stamps an ordered route', asyn
     'href',
     /google\.com\/maps\/dir\/\?api=1&destination=/,
   );
-  const firstPinId = await page.evaluate(
-    () => JSON.parse(localStorage.getItem('gms-ward-route')!).stops[0].id,
+  const firstPin = await page.evaluate(
+    () => JSON.parse(localStorage.getItem('gms-ward-route')!).stops[0],
   );
   await expect(page.locator('.ward-itinerary > li').first()).toContainText('Giá chưa xác minh');
   await page
@@ -123,26 +128,37 @@ test('ward suggestion previews, starts, scans and stamps an ordered route', asyn
     .first()
     .getByRole('button', { name: 'Voice Bridge' })
     .click();
-  await expect(page.locator('#tool-vendor')).toHaveValue(firstPinId);
-  await expect(page.locator('.order-sentence')).toContainText('chè');
+  await expect(page.locator('#tool-vendor')).toHaveValue(firstPin.id);
+  await expect(page.locator('.order-sentence')).toContainText(
+    firstPin.dish.toLocaleLowerCase('vi'),
+  );
   await page.getByRole('button', { name: 'Về hành trình theo phường' }).click();
   await page
     .locator('.ward-itinerary > li')
     .first()
     .getByRole('button', { name: 'Lưu dấu' })
     .click();
-  await expect(page.locator('#tool-vendor')).toHaveValue(firstPinId);
+  await expect(page.locator('#tool-vendor')).toHaveValue(firstPin.id);
   await page.getByRole('button', { name: 'Thử trải nghiệm minh họa' }).click();
   await expect(page.locator('.scan-success')).toBeVisible();
   await page.getByRole('button', { name: 'Mở hộ chiếu' }).click();
   await expect(page.locator('.reference-passport .badge-card')).toHaveCount(1);
-  await expect(page.locator('.reference-passport')).toContainText('Gánh chè cụ Mai');
+  await expect(page.locator('.reference-passport')).toContainText(firstPin.name);
   await page.goto(routeUrl);
   await expect(page.locator('.journey-progress')).toContainText('1/3');
 
+  await page.evaluate(() => {
+    const saved = JSON.parse(localStorage.getItem('gms-ward-route')!);
+    saved.revision = 1;
+    saved.stops = saved.stops.slice(0, 1);
+    localStorage.setItem('gms-ward-route', JSON.stringify(saved));
+  });
   await page.reload();
   await expect(page.locator('.ward-itinerary > li')).toHaveCount(3);
   await expect(page.locator('.journey-progress')).toContainText('1/3');
+  await expect
+    .poll(() => page.evaluate(() => JSON.parse(localStorage.getItem('gms-ward-route')!).revision))
+    .toBe(2);
   await page.getByRole('button', { name: 'Chọn tuyến khác' }).click();
   await expect(page.locator('.ward-route-card')).toHaveCount(3);
 });
